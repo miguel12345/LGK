@@ -57,10 +57,10 @@ end
 --@function [parent=#src.LayoutInflater] parseNode
 --@return Node#Node description
 function LayoutInflater:parseNode(xmlNode,handler,context) 
-    local nodeInfalter = lgk.LayoutNodeInflater
-    local nodeName = xmlNode:name()
-    local xmlProperties = applyContextToXMLProperties(xmlNode,context)
-    local cocosNode = nodeInfalter.inflateNode(nodeName,xmlProperties,handler)
+    local widgetInflater = lgk.WidgetInflater
+    local widgetName = xmlNode:name()
+    xmlNode = applyContextToXMLProperties(xmlNode,context)
+    local cocosNode = widgetInflater.inflateFromXMLNode(widgetName,xmlNode,handler)
     
     -- elements table for fast access
     if cocosNode:getName() ~= nil then

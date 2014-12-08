@@ -14,15 +14,17 @@ require "lgk.xml.XMLScene"
 require "lgk.xml.XMLParser"
 
 -- layout
-require "lgk.layout.LayoutUtils"
-require "lgk.layout.LayoutNodeInflater"
-require "lgk.layout.LayoutInflater"
+require "lgk.inflation.LayoutUtils"
+require "lgk.inflation.WidgetAttributeInflater"
+require "lgk.inflation.WidgetInflater"
+require "lgk.inflation.LayoutInflater"
+
+-- animation
+require "lgk.animation.Transition"
+require "lgk.animation.TransitionSpec"
 
 -- scene
 require "lgk.scene.LGKScene"
-
--- transition
-require "lgk.animation.LayoutTransitionManager"
 
 -- network
 require "lgk.network.JSONRequest"

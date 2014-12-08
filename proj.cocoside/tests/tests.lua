@@ -28,9 +28,10 @@ local tests = {
     };
     
     ["Animation"] = {
-            "LayoutTransitionManagerTestScene";
-            "LayoutTransitionManagerMultipleElementsTestScene";
-            "LayoutTransitionManagerFinishCallbackTestScene"
+            "TransitionSingleTestScene";
+            "TransitionSequenceTestScene";
+            "TransitionGroupTestScene";
+            "TransitionSingleCompletionCallbackTestScene"
     };
     
     ["Widgets"] = {
