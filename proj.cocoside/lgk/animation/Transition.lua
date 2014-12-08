@@ -7,30 +7,40 @@ function Transition:run()
     local currentWidget = self.widget
     
     assert(self.widget~=nil,"Trying to run a transition without a target widget")
-    assert(self.initialStateCallback~=nil,"Trying to run a transition without having defined the initial state callback")
     assert(self.finalStateCallback~=nil,"Trying to run a transition without having defined the final state callback")
     
-    --apply initial state
-    self.initialStateCallback(currentWidget)
-    self:doWidgetParentLayoutIfNeeded()
+    if not self.initialState then
+        --apply initial state
+        if self.initialStateCallback then self.initialStateCallback(currentWidget) end
+        self:doWidgetParentLayoutIfNeeded()
+        
+        --capture state
+        local initialState = self:captureWidgetCurrentState()
+        self.initialState = initialState
+    end
     
-    --capture state
-    local initialState = self:captureWidgetCurrentState()
+    if not self.finalState then
+        --apply final state
+        self.finalStateCallback(currentWidget)
+        self:doWidgetParentLayoutIfNeeded()
     
-    --apply final state
-    self.finalStateCallback(currentWidget)
-    self:doWidgetParentLayoutIfNeeded()
-    
-    --capture final state
-    local finalState = self:captureWidgetCurrentState()
+        --capture final state
+        local finalState = self:captureWidgetCurrentState()
+        self.finalState = finalState
+    end
     
     --calculate the differences and run the actions
-    self:createAndRunAction(initialState,finalState)
+    self:createAndRunAction()
     
 end
 
-function Transition:createAndRunAction(initialState,finalState)
+function Transition:createAndRunAction()
 
+    assert(self.initialState~=nil,"At this point the initial state must have already been calculated. Please make sure run was executed prior to this method")
+    assert(self.finalState~=nil,"At this point the final state must have already been calculated. Please make sure run was executed prior to this method")
+
+    local initialState = self.initialState
+    local finalState = self.finalState
     local currentWidget = self.widget
 
     local time = self.duration or 1
@@ -112,10 +122,18 @@ function Transition:isDone()
 end
 
 function Transition:reverse()
-    local tmp = self.initialStateCallback
-    self.initialStateCallback = self.finalStateCallback 
-    self.finalStateCallback = tmp
+    if self.initialState and self.finalState then
+    
+        local tmp = self.initialState
+        self.initialState = self.finalState 
+        self.finalState = tmp
+    else
+        local tmp = self.initialStateCallback
+        self.initialStateCallback = self.finalStateCallback 
+        self.finalStateCallback = tmp
+    end
     self.reversed =  not self.reversed
+
 end
 
 function Transition:isReversed()
@@ -270,19 +288,20 @@ end
 
 function TransitionGroup:run()
 
-    local transitionInitialState = {}
-    local biggestTransition = nil
+    local biggestTransition = self.biggestTransition
     local parents = {}
     
     for transition in self:transitionIterator() do
-        local widget = transition.widget
-        transition.initialStateCallback(widget)
-        if not biggestTransition then
-            biggestTransition = transition
-        elseif transition:getDuration() > biggestTransition:getDuration() then
-            biggestTransition = transition
+        if not transition.initialState then
+            local widget = transition.widget
+            if transition.initialStateCallback then transition.initialStateCallback(widget) end
+            if not biggestTransition then
+                biggestTransition = transition
+            elseif transition:getDuration() > biggestTransition:getDuration() then
+                biggestTransition = transition
+            end
+            parents[widget:getWidgetParent()] = {}
         end
-        parents[widget:getWidgetParent()] = {}
     end
     
     self.biggestTransition = biggestTransition
@@ -295,14 +314,20 @@ function TransitionGroup:run()
     end
     parents = {}
     
-    for transition in self:transitionIterator() do
-        transitionInitialState[transition] = transition:captureWidgetCurrentState()
-    end
     
     for transition in self:transitionIterator() do
-        local widget = transition.widget
-        transition.finalStateCallback(widget)
-        parents[widget:getWidgetParent()] = {}
+        if not transition.initialState then
+            transition.initialState = transition:captureWidgetCurrentState()
+        end
+    end
+
+    
+    for transition in self:transitionIterator() do
+        if not transition.finalState then
+            local widget = transition.widget
+            transition.finalStateCallback(widget)
+            parents[widget:getWidgetParent()] = {}
+        end
     end
     
     for parent in pairs(parents) do
@@ -311,11 +336,11 @@ function TransitionGroup:run()
     parents = {}
     
     for transition in self:transitionIterator() do
-        local finalState = transition:captureWidgetCurrentState()
-        transition:createAndRunAction(transitionInitialState[transition],finalState)
+        if not transition.finalState then
+            transition.finalState = transition:captureWidgetCurrentState()
+        end
+        transition:createAndRunAction()
     end
-    
-    transitionInitialState = {}
 end
 
 
