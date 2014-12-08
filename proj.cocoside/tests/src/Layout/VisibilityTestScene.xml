@@ -1,0 +1,26 @@
+<Layout size="1.0,1.0" type="relative">
+	
+	<Layout size="600,250" alignment="TC" type="relative">
+		<Layout alignment="TC" type="horizontal" size="600,100" marginTop="20" name="parent">
+			<Layout name="red" size="200,100" backgroundColor="255,0,0"></Layout>
+			<Layout name="green" size="200,100" backgroundColor="0,255,0"></Layout>
+			<Layout name="blue" size="200,100" backgroundColor="0,0,255"></Layout>
+		</Layout>
+		
+		<Button onClick="showCollapseGreenArea" alignment="BC" marginBottom="50" text="collapse/show green area" font="fonts/Marker Felt.ttf" fontSize="20"></Button>
+		<Button onClick="showHideGreenArea" alignment="BC" text="hide/show green area" font="fonts/Marker Felt.ttf" fontSize="20"></Button>
+	</Layout>
+	
+	<Layout size="600,250" alignment="TC" marginTop="300" type="relative">
+		<Layout alignment="TC" type="horizontal" size="600,100" marginTop="20" name="parent2">
+			<Layout name="red2" size="200,100" backgroundColor="255,0,0"></Layout>
+			<Layout name="green2" visibility="collapsed" size="200,100" backgroundColor="0,255,0"></Layout>
+			<Layout name="blue2" size="200,100" backgroundColor="0,0,255"></Layout>
+		</Layout>
+		<Text alignment="CL" text="Green starts collapsed" font="fonts/Marker Felt.ttf" fontSize="15"></Text>
+		<Button onClick="showCollapseGreenArea2" alignment="BC" marginBottom="50" text="collapse/show green area" font="fonts/Marker Felt.ttf" fontSize="20"></Button>
+		<Button onClick="showHideGreenArea2" alignment="BC" text="hide/show green area" font="fonts/Marker Felt.ttf" fontSize="20"></Button>
+	</Layout>
+	
+		
+</Layout>

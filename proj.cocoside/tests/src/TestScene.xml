@@ -1,0 +1,12 @@
+<RootLayout type="relative" name="SceneRoot">
+	
+	<Layout type="relative" alignment="CC" size="1.0,1.0" name="SceneContentRoot">
+		
+	</Layout>
+	
+	<Button name="homeButton" onClick="goHome" image="home.png" alignment="TL" marginLeft="10" marginTop="10" size="50,50"></Button>
+	<Button name="leftButton" onClick="goToPreviousScene" image="arrow-left-b.png" alignment="BL" marginLeft="0" marginTop="10" size="100,100"></Button>
+	<Button name="rightButton" onClick="goToNextScene" image="arrow-right-b.png" alignment="BR" size="100,100"></Button>
+	<Button name="executeButton" onClick="execute" image="execute-test-icon.png" alignTopCenterOf="description" marginBottom="10" size="50,50"></Button>
+	<Text name="description" alignment="BC" marginBottom="20" text="Test Description here" font="fonts/Marker Felt.ttf" fontSize="30"></Text>
+</RootLayout>

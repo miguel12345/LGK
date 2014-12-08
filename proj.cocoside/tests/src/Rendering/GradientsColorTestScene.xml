@@ -1,0 +1,11 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<Layout alignment="CC" type="horizontal" name="gradientsRoot" wrapContent="true">
+		<Layout name="blueGradient" size="200,200" backgroundColor="#04AFFF-#04E8C5" backgroundColorOrientation="horizontal" type="relative">
+			<Text alignment="CC" text="Horizontal" font="fonts/Marker Felt.ttf" fontSize="15"></Text>
+		</Layout>
+		<Layout name="pinkGradient" size="200,200" backgroundColor="#FF00F3-#6A00E8" backgroundColorOrientation="vertical" type="relative">
+			<Text alignment="CC" text="Vertical" font="fonts/Marker Felt.ttf" fontSize="15"></Text>
+		</Layout>
+	</Layout>
+	
+</Layout>

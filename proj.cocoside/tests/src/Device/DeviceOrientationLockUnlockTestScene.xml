@@ -1,0 +1,7 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<Layout wrapContent="true" alignment="CC" type="vertical">
+		<Button name="lockLandscape" onClick="lockLandscape" alignment="CC" fontSize="70" text="Lock orientation to landscape"></Button>
+		<Button name="lockPortrait" marginTop="20" onClick="lockPortrait" fontSize="70" text="Lock orientation to portrait"></Button>
+		<Button name="unlock" marginTop="20" onClick="unlockDeviceOrientation"  fontSize="70" text="Unlock device orientation"></Button>
+	</Layout>
+</Layout>

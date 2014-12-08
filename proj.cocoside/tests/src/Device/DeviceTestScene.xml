@@ -1,0 +1,7 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	
+	<Text size="1.0,0.1" alignment="CC" alignTopCenterOf="deviceInches" text="Your screen has" font="Proxima Nova Light.ttf"></Text>
+	<Text size="1.0,0.1" name="deviceInches" alignment="CC" text="Shadowed" font="Proxima Nova Light.ttf"></Text>
+	<Text size="1.0,0.1" alignment="CC" text="inches" alignBottomCenterOf="deviceInches" font="Proxima Nova Light.ttf"></Text>
+	
+</Layout>

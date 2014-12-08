@@ -1,0 +1,7 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<PageView size="600,400" alignment="CC">
+		<Layout backgroundColor="255,0,0" ></Layout>
+		<Layout backgroundColor="0,255,0" ></Layout>
+		<Layout backgroundColor="0,255,255"></Layout>
+	</PageView>
+</Layout>

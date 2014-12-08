@@ -1,0 +1,5 @@
+<Layout size="1.0,1.0" type="vertical" name="root">
+	<Text name="wordWrap" marginTop="10" gravity="centerHorizontal" size="200,0" text="You should see this text with word wrapping since it is the default" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="30"></Text>
+	<Text name="wordWrap" marginTop="20" gravity="centerHorizontal" size="200,0" text="You should see this text with word wrapping" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="30" wrap="word"></Text>
+	<Text name="wordWrap" marginTop="20" gravity="centerHorizontal" size="200,0" text="You should see this text with character wrapping" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="30" wrap="character"></Text>
+</Layout>

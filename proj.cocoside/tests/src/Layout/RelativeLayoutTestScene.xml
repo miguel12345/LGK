@@ -1,0 +1,10 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	
+	<Layout name="red" alignment="CC" size="200,200" backgroundColor="255,0,0"></Layout>
+	<Layout name="green" alignRightTopOf="red" size="200,200" backgroundColor="0,125,0"></Layout>
+	<Layout alignLeftTopOf="red" size="200,300" backgroundColor="100,125,0"></Layout>
+	<Layout alignBottomLeftOf="red" size="300,200" backgroundColor="10,125,123"></Layout>
+	<Layout alignTopCenterOf="red" size="600,200" marginBottom="10" backgroundColor="255,125,123"></Layout>
+		
+	
+</Layout>

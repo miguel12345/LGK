@@ -1,0 +1,50 @@
+<Layout size="1.0,1.0" type="horizontal" name="root">
+	
+	<Layout size="0.333,1.0" type="vertical">
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFill1" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/square-image.jpg" contentMode="AspectFill"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFill"></Text>
+		</Layout>	
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewScaleToFit1" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/square-image.jpg" contentMode="ScaleToFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="ScaleToFit"></Text>
+		</Layout>
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFit1" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/square-image.jpg" contentMode="AspectFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFit"></Text>
+		</Layout>
+	</Layout>
+	
+	
+	<Layout size="0.333,1.0" type="vertical">
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFill2" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/landscape-image.png" contentMode="AspectFill"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFill"></Text>
+		</Layout>	
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewScaleToFit2" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/landscape-image.png" contentMode="ScaleToFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="ScaleToFit"></Text>
+		</Layout>
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFit2" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/landscape-image.png" contentMode="AspectFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFit"></Text>
+		</Layout>
+	</Layout>
+	
+	<Layout size="0.333,1.0" type="vertical">
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFill3" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/portrait-image.png" contentMode="AspectFill"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFill"></Text>
+		</Layout>	
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewScaleToFit3" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/portrait-image.png" contentMode="ScaleToFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="ScaleToFit"></Text>
+		</Layout>
+		<Layout size="1.0,0.3" type="relative">
+			<ImageView name="imageViewAspectFit3" size="1.0,1.0" alignment="CC" drawDebug="true" image="images/portrait-image.png" contentMode="AspectFit"></ImageView>
+			<Text alignment="CC" textColor="0,0,0" fontSize="40" text="AspectFit"></Text>
+		</Layout>
+	</Layout>
+	
+		
+</Layout>

@@ -1,0 +1,10 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<Text name="text1" size="200,0" alignment="CC" text="This text should not jump when changed" font="Proxima Nova Light.ttf" fontSize="35"></Text>
+	<Text name="text2" size="200,200" alignment="TC" text="This text should not jump when changed" font="Proxima Nova Light.ttf" fontSize="35"></Text>
+	<Text name="text3" size="200,0" alignment="CR" marginRight="10" text="This text should not jump when changed" font="Proxima Nova Light.ttf" fontSize="35"></Text>
+	<Text name="text4" size="1.0,0" alignment="BL" marginBottom="180" marginLeft="20" text="This text should not jump when changed" font="Proxima Nova Light.ttf" fontSize="35"></Text>
+	<Text name="text5" alignTopCenterOf="text1" marginBottom="10" text="This text should not jump when changed" font="Proxima Nova Light.ttf" fontSize="35"></Text>
+			
+	<Button alignment="BC" onClick="reloadScene" text="Click here to reload scene" fontSize="40" marginBottom="90"></Button>
+	<Button alignment="BC" onClick="changeText" text="Click here to change text" fontSize="40" marginBottom="55"></Button>
+	</Layout>

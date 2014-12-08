@@ -1,0 +1,13 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	
+	<Layout wrapContent="true" alignment="CC" type="horizontal" name="parent">
+		<Layout name="red" size="200,100" backgroundColor="255,0,0"></Layout>
+		<Layout name="green" size="200,100" backgroundColor="0,255,0"></Layout>
+	</Layout>
+	
+	<Layout name="reusableElement" size="200,100" backgroundColor="100,100,100"></Layout>
+	
+	<Button onClick="addElementToLayout" alignment="BC" marginBottom="150" text="Add element" font="fonts/Marker Felt.ttf" fontSize="20"></Button>
+	<Button onClick="removeElementFromLayout" alignment="BC" marginBottom="100" text="Remove Element" font="fonts/Marker Felt.ttf" fontSize="20"></Button>			
+	
+</Layout>

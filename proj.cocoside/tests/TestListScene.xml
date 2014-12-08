@@ -1,0 +1,12 @@
+<RootLayout type="relative" name="SceneRoot">
+	
+	<Layout size="1.0,1.0" type="vertical" name="root">
+		<ListView marginTop="20" size="1.0,1.0" name="elements">
+			
+		</ListView>
+	</Layout>
+	
+	<Button name="homeButton" onClick="goHome" image="home.png" alignment="TL" marginLeft="10" marginTop="10" size="50,50"></Button>
+	<Button name="executeTestsButton" onClick="executeAllTestsInElement" image="execute-test-icon.png" alignment="TR" marginRight="10" marginTop="10" size="50,50"></Button>
+		
+</RootLayout>

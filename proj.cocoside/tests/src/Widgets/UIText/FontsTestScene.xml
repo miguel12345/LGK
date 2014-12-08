@@ -1,0 +1,6 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<Text name="center" alignment="CC" shadow="true" shadowOffset="-4,2" shadowColor="255,0,255,200" text="Shadowed" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="85"></Text>
+	<Text name="bottom" alignBottomCenterOf="center" textSize="120,250" size="120,250" text="Multiline text with wrap" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="40"></Text>
+	<Text name="top" marginBottom="10" alignTopCenterOf="center" size="200,260" text="Should be scaled" font="tests/res/fonts/Proxima Nova Light.ttf" fontSize="85"></Text>
+	
+</Layout>

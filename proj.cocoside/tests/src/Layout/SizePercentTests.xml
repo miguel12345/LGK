@@ -1,0 +1,16 @@
+<Layout size="1.0,1.0" type="relative">
+	
+	<Layout alignment="TC" size="1.0,200" backgroundColor="180,0,0" type="relative" name="fullScreenWidth">
+			<Text name="description" alignment="CC" text="size=1.0,200" font="fonts/Marker Felt.ttf" fontSize="30"></Text>
+	</Layout>
+	
+	<Layout alignment="TC" size="1.0,200" marginTop="200" backgroundColor="0,0,0" type="horizontal">
+		<Layout size="0.5,1.0" backgroundColor="0,180,0" type="relative" name="halfScreenWidth">
+			<Text name="description" alignment="CC" text="size=0.5,1.0" font="fonts/Marker Felt.ttf" fontSize="30"></Text>
+		</Layout>			
+		<Layout size="0.5,1.0" backgroundColor="0,0,200" type="relative">
+			<Text name="description" alignment="CC" text="size=0.5,1.0" font="fonts/Marker Felt.ttf" fontSize="30"></Text>
+		</Layout>			
+	</Layout>
+		
+</Layout>

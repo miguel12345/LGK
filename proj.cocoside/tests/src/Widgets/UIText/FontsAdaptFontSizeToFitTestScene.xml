@@ -1,0 +1,11 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	
+	<Layout  name="fitByWidthArea" backgroundColor="255,0,0" alignment="CC" size="200,300"></Layout>
+	<Text drawDebug="true" name="fitByWidth" alignment="CC" size="200,300" shadow="true" shadowOffset="-4,2" shadowColor="255,255,255,60" text="Width" font="Proxima Nova Light.ttf"></Text>
+
+	<Layout name="fitByHeightArea" backgroundColor="0,255,0" alignment="TC" marginTop="10" size="350,40"></Layout>
+	<Text  drawDebug="true" name="fitByHeight" alignment="TC" size="350,40" marginTop="10" shadow="true" shadowOffset="-4,2" shadowColor="255,255,255,60" text="Height" font="fonts/Proxima Nova Light.ttf"></Text>
+	
+	<Text  drawDebug="true" name="unspecifiedHeight" alignTopCenterOf="fitByWidthArea" size=".3,-1" text="Unspecified height" font="Proxima Nova Light.ttf"></Text>
+	
+</Layout>

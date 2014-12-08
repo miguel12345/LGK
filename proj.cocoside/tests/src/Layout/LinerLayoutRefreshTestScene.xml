@@ -1,0 +1,12 @@
+<Layout size="1.0,1.0" type="relative">
+	
+	<Layout alignment="CC" type="horizontal" size="800,200" backgroundColor="255,255,255" name="parent">
+		<Layout name ="red" size="200,200" backgroundColor="255,0,0"></Layout>
+		<Layout name="green" size="200,200" backgroundColor="0,255,0"></Layout>
+		<Layout name="blue" size="200,200" backgroundColor="0,0,255"></Layout>
+	</Layout>
+	
+	<Button onClick="expandGreenArea" alignment="BC" marginBottom="150" text="Expand Green Area" font="fonts/Marker Felt.ttf" fontSize="30"></Button>
+	<Button onClick="shrinkGreenArea" alignment="BC" marginBottom="100" text="Shrink Green Area" font="fonts/Marker Felt.ttf" fontSize="30"></Button>
+		
+</Layout>

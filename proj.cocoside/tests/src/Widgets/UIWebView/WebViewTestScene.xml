@@ -1,0 +1,12 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	
+	<WebView name="webview" size="0.6,0.6" alignment="CC" url="http://www.google.com"> </WebView>
+	
+	<Layout type="vertical" alignment="CC" wrapContent="true" alignTopCenterOf="webview">
+		<Button name="changeURL" onClick="changeURLToGoogle" text="Change URL to google" fontSize="30" />
+		<Button name="changeURL" onClick="changeURLToAmazon" text="Change URL to amazon" fontSize="30" />
+		<Button name="loadHTML" onClick="loadHTML" text="Load Html" fontSize="30" />
+		<Button onClick="evaluateJS" text="Evaluate JS" fontSize="30" />
+	</Layout>
+	
+</Layout>
