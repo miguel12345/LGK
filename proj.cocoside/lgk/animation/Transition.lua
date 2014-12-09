@@ -21,7 +21,7 @@ function Transition:run()
     --capture state
     local initialState = self:captureWidgetCurrentState()
     --apply final state
-    self.finalStateCallback(currentWidget)
+     self.finalStateCallback(currentWidget)
     self:doWidgetParentLayoutIfNeeded()
 
     --capture final state
@@ -32,6 +32,10 @@ function Transition:run()
     
 end
 
+function Transition:setId(id)
+    self.id = id
+end
+
 function Transition:createAndRunAction(initialState,finalState)
 
     assert(initialState~=nil,"At this point the initial state must have already been calculated. Please make sure run was executed prior to this method")
@@ -40,7 +44,6 @@ function Transition:createAndRunAction(initialState,finalState)
     local currentWidget = self.widget
 
     local time = self.duration or 1
-    local completionCallback = self.completionCallback
 
     local initialPosition = initialState.position
     local initialOpacity = initialState.opacity
@@ -77,25 +80,32 @@ function Transition:createAndRunAction(initialState,finalState)
     end
 
     actionToRun =  cc.Sequence:create(actionToRun,cc.CallFunc:create(function()
+        currentWidget:setIgnoreLayout(false)
         self.isRunning = false
         self.isDoneInternal = true
         self.currentAction = nil
-        if completionCallback then completionCallback() end
+        if self.completionCallback then self.completionCallback() end
     end))       
 
     self.isRunning = true
     self.isDoneInternal = false
     self.currentAction = actionToRun
+    currentWidget:setIgnoreLayout(true)
     currentWidget:runAction(actionToRun)
     
 end
 
 function Transition:generateInitialCallbackFromCurrentWidgetState()
-    local layoutParameter = self.widget:getLayoutParameter()
-    local opacity = self.widget:getOpacity()
-    
+    local widget = self.widget
+    local layoutParameter = widget:getLayoutParameter():clone()
+    layoutParameter:retain()
+    local opacity = widget:getOpacity()
+
     self.initialStateCallback = function(widget)
-        widget:setLayoutParameter(layoutParameter)
+        local widgetLayoutParameter = widget:getLayoutParameter()
+        if not widgetLayoutParameter:equals(layoutParameter) then
+            widget:setLayoutParameter(layoutParameter:clone())
+        end
         widget:setOpacity(opacity)
     end
 end
@@ -266,6 +276,14 @@ function TransitionSequence:transitionIterator()
     end
 end
 
+function TransitionSequence:getDuration()
+    local duration = 0
+    for transition in self:transitionIterator() do
+        duration = duration + transition:getDuration()
+    end
+    return duration
+end
+
 lgk.TransitionSequence = TransitionSequence
 
 local TransitionGroup = class("TransitionGroup",function()
@@ -287,55 +305,22 @@ end
 
 function TransitionGroup:run()
 
-    local transitionInitialState = {}
+
     local biggestTransition = self.biggestTransition
-    local parents = {}
-    
     for transition in self:transitionIterator() do
-        local widget = transition.widget
-        if transition.initialStateCallback then transition.initialStateCallback(widget) end
         if not biggestTransition then
             biggestTransition = transition
         elseif transition:getDuration() > biggestTransition:getDuration() then
             biggestTransition = transition
         end
-        parents[widget:getWidgetParent()] = {}
+        transition:run()
     end
-    
     self.biggestTransition = biggestTransition
     biggestTransition:setCompletionCallback(self.completionCallback)
-    
-    self:setDuration(biggestTransition:getDuration())
-    
-    for parent in pairs(parents) do
-        parent:doLayoutIfNeeded()
-    end
-    parents = {}
-    
-    
-    for transition in self:transitionIterator() do
-        transitionInitialState[transition] = transition:captureWidgetCurrentState()
-    end
+end
 
-    
-    for transition in self:transitionIterator() do
-        local widget = transition.widget
-        transition.finalStateCallback(widget)
-        parents[widget:getWidgetParent()] = {}
-    end
-    
-    for parent in pairs(parents) do
-        parent:doLayoutIfNeeded()
-    end
-    parents = {}
-    
-    for transition in self:transitionIterator() do
-        local finalState = transition:captureWidgetCurrentState()
-        transition:createAndRunAction(transitionInitialState[transition],finalState)
-    end
-    
-    transitionInitialState = {}
-
+function TransitionGroup:getDuration()
+    return self.biggestTransition:getDuration()
 end
 
 

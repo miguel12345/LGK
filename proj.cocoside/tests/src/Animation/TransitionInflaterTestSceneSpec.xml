@@ -1,0 +1,24 @@
+<Sequence>
+	
+	<Group>
+		<Sequence>
+			<Transition duration="0.3" name="animatableElementTL" alignment="BL"></Transition>
+			<Transition duration="0.3" name="animatableElementTC" alignment="BC"></Transition>
+			<Transition duration="0.3" name="animatableElementTR" alignment="BR"></Transition>
+		</Sequence>
+		<Sequence>
+			<Transition duration="0.3" name="animatableElementBL" alignment="TL"></Transition>
+			<Transition duration="0.3" name="animatableElementBC" alignment="TC"></Transition>
+			<Transition duration="0.3" name="animatableElementBR" alignment="TR"></Transition>
+		</Sequence>
+	</Group>
+	<Group>
+		<Transition duration="0.3" name="animatableElementTL" alignment="BR"></Transition>
+		<Transition id="cenas3" duration="0.4" name="animatableElementTR" alignment="BL"></Transition>
+	</Group>
+	<Group id="cenas2">
+		<Transition id="cenas" duration="0.3" name="animatableElementBL" alignment="TR"></Transition>
+		<Transition duration="0.3" name="animatableElementBR" alignment="TL"></Transition>
+	</Group>
+	
+</Sequence>

@@ -2,7 +2,7 @@
 	
 	<Button onClick="animate" text="Animate" alignTopCenterOf="area" fontSize="40"></Button>
 	
-	<RelativeLayout name="area" alignment="CC" size="0.5,0.5" backgroundColor="#000000">
+	<RelativeLayout logLayout="true" name="area" alignment="CC" size="0.5,0.5" backgroundColor="#000000">
 		<Layout name="animatableElement" size="100,100" backgroundColor="255,0,0" alignment="CL"></Layout>
 		<Layout name="animatableElement2" size="100,100" backgroundColor="0,255,0" alignment="BR"></Layout>
 		<Layout name="animatableElement3" size="100,100" backgroundColor="0,0,255" alignment="BL"></Layout>

@@ -1,7 +1,7 @@
-local TestScene = class("TransitionSingleTestScene",function()
+local TestScene = class("TransitionGroupTestScene",function()
     return require("TestScene").create({
-        description = "Widget Transition";
-        contentXML = "TransitionSingleTestScene"
+        description = "Transition inflater";
+        contentXML = "TransitionInflaterTestScene"
     })
 end)
 
@@ -19,8 +19,8 @@ end
 function TestScene.create()
     local scene = TestScene.new()
 
-    scene.transitionInflater = lgk.TransitionInflater:create("TransitionSingleTestSceneSpec.xml",scene.elements)
-
+    scene.transitionInflater = lgk.TransitionInflater:create("TransitionInflaterTestSceneSpec.xml",scene.elements)
+    
     scene.execute = function(self)
 
     end

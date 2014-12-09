@@ -1,0 +1,5 @@
+<Group>
+	<Transition duration="0.3" name="animatableElement" alignment="BR"></Transition>
+	<Transition duration="0.3" name="animatableElement2" alignment="BR" marginBottom="100"></Transition>
+	<Transition duration="0.3" name="animatableElement3" alignment="BR" marginRight="100"></Transition>
+</Group>

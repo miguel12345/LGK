@@ -21,7 +21,7 @@ require "lgk.inflation.LayoutInflater"
 
 -- animation
 require "lgk.animation.Transition"
-require "lgk.animation.TransitionSpec"
+require "lgk.animation.TransitionInflater"
 
 -- scene
 require "lgk.scene.LGKScene"

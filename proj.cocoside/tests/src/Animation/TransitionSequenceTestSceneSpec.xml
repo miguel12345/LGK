@@ -1,0 +1,5 @@
+<Sequence>
+	<Transition duration="0.3" name="animatableElement" alignment="BL"></Transition>
+	<Transition duration="0.3" name="animatableElement2" alignment="BC"></Transition>
+	<Transition duration="0.3" name="animatableElement3" alignment="BR"></Transition>
+</Sequence>

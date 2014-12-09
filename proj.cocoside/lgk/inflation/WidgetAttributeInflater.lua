@@ -10,7 +10,9 @@ local widgetAttributeInflater = {}
 local layoutUtils = lgk.LayoutUtils
 
 widgetAttributeInflater.inflateCommonAttributes = function(widget,xmlNode)
-    if xmlNode["@name"] then
+    local widgetXMLNodeName = xmlNode["@name"]
+    local widgetCurrentName = widget:getName()
+    if widgetXMLNodeName and widgetXMLNodeName~=widgetCurrentName then
         local name = xmlNode["@name"]
         widget:setName(xmlNode["@name"]) 
         local relativeLayoutParameter = widget:getLayoutParameter();
@@ -23,6 +25,8 @@ end
 widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
 
     local layoutUtils = lgk.LayoutUtils
+    local layoutParameter = widget:getLayoutParameter()
+    local layoutParameterChanged = false
     
     -- parse background color
     local backgroundColorString = xmlNode["@backgroundColor"]
@@ -73,9 +77,12 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
     --relative layout
     local alignment = xmlNode["@alignment"]
     if alignment ~= nil then
-        local relativeParameter = widget:getLayoutParameter() or ccui.RelativeLayoutParameter:create()
-        relativeParameter:setAlign(layoutUtils:getAlignmentFromString(alignment))
-        widget:setLayoutParameter(relativeParameter)
+        layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
+        local alignment = layoutUtils:getAlignmentFromString(alignment)
+        if layoutParameter:getAlign() ~=alignment then
+            layoutParameterChanged = true
+            layoutParameter:setAlign(alignment)
+        end
     end
     
     local relativeAlignmentTo = {
@@ -97,30 +104,49 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
         
         local relativeToWidgetName=xmlNode["@"..key]
         if relativeToWidgetName then
-            local relativeParameter = widget:getLayoutParameter() or ccui.RelativeLayoutParameter:create()
-            relativeParameter:setAlign(relativeAlignmentType)
-            relativeParameter:setRelativeToWidgetName(relativeToWidgetName)
-            widget:setLayoutParameter(relativeParameter)
+            layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
+            local alignment = relativeAlignmentType
+            if layoutParameter:getAlign() ~=alignment then
+                layoutParameterChanged = true
+                layoutParameter:setAlign(alignment)
+            end
+            local layoutRelativeToWidgetName = layoutParameter:getRelativeToWidgetName()
+            if relativeToWidgetName ~= layoutRelativeToWidgetName then
+                layoutParameter:setRelativeToWidgetName(relativeToWidgetName)
+                layoutParameterChanged = true
+            end
+            break
         end
         
+    end
+    
+    local areMarginsEqual = function(margin1,margin2)
+        return  margin1.left == margin2.left and 
+                margin1.right == margin2.right and 
+                margin1.bottom == margin2.bottom and
+                margin1.top == margin2.top 
     end
     
     -- margin
     local margin = xmlNode["@margin"]
     if margin ~= nil then
         local marginTable = layoutUtils:getMarginFromString(margin) 
-        local layoutParameter = widget:getLayoutParameter() or ccui.LinearLayoutParameter:create()
-        layoutParameter:setMargin(marginTable)
-        widget:setLayoutParameter(layoutParameter)
+        layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
+        if not areMarginsEqual(layoutParameter:getMargin(),marginTable) then
+            layoutParameterChanged = true
+            layoutParameter:setMargin(marginTable)
+        end
     else
         local marginTable = {left = (xmlNode["@marginLeft"] or 0); 
             right = (xmlNode["@marginRight"] or 0);
             top = (xmlNode["@marginTop"] or 0);
             bottom = (xmlNode["@marginBottom"] or 0);}
         if marginTable.left ~= 0 or marginTable.right ~= 0 or marginTable.top ~= 0 or marginTable.bottom ~= 0 then
-            local layoutParameter = widget:getLayoutParameter() or ccui.LinearLayoutParameter:create()
-            layoutParameter:setMargin(marginTable)
-            widget:setLayoutParameter(layoutParameter)
+            layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
+            if not areMarginsEqual(layoutParameter:getMargin(),marginTable) then
+                layoutParameterChanged = true
+                layoutParameter:setMargin(marginTable)
+            end
         end
     end
     
@@ -133,9 +159,12 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
     -- gravity
     local gravity = xmlNode["@gravity"]
     if gravity ~= nil then
-        local layoutParameter = widget:getLayoutParameter() or ccui.LinearLayoutParameter:create()
-        layoutParameter:setGravity(layoutUtils:getGravityFromString(gravity))
-        widget:setLayoutParameter(layoutParameter)
+        layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
+        local gravity = layoutUtils:getGravityFromString(gravity)
+        if gravity ~= layoutParameter:getGravity() then
+            layoutParameter:setGravity(gravity)
+            layoutParameterChanged = true
+        end
     end
     
     -- visibility
@@ -150,6 +179,13 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
         widget:setLogLayout(true)
     end
     
+    
+    -- apply layout parameter
+    if widget:getLayoutParameter() ~= layoutParameter then
+        widget:setLayoutParameter(layoutParameter)
+    elseif layoutParameterChanged then
+        widget:layoutParameterChanged()
+    end
     
     -- common
     widgetAttributeInflater.inflateCommonAttributes(widget,xmlNode)

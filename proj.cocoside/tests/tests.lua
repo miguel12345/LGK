@@ -31,8 +31,7 @@ local tests = {
             "TransitionSingleTestScene";
             "TransitionSequenceTestScene";
             "TransitionGroupTestScene";
-            "TransitionSingleCompletionCallbackTestScene";
-            "TransitionNoInitialStateTestScene"
+            "TransitionInflaterTestScene"
     };
     
     ["Widgets"] = {
