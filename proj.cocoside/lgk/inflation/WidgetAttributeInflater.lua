@@ -137,10 +137,10 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
             layoutParameter:setMargin(marginTable)
         end
     else
-        local marginTable = {left = (xmlNode["@marginLeft"] or 0); 
-            right = (xmlNode["@marginRight"] or 0);
-            top = (xmlNode["@marginTop"] or 0);
-            bottom = (xmlNode["@marginBottom"] or 0);}
+        local marginTable = {left = (tonumber(xmlNode["@marginLeft"]) or 0); 
+            right = (tonumber(xmlNode["@marginRight"]) or 0);
+            top = (tonumber(xmlNode["@marginTop"]) or 0);
+            bottom = (tonumber(xmlNode["@marginBottom"]) or 0);}
         if marginTable.left ~= 0 or marginTable.right ~= 0 or marginTable.top ~= 0 or marginTable.bottom ~= 0 then
             layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
             if not areMarginsEqual(layoutParameter:getMargin(),marginTable) then
