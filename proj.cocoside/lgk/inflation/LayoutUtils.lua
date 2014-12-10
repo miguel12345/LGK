@@ -62,6 +62,7 @@ local layoutTypes = {
     vertical = ccui.LayoutType.VERTICAL;
     horizontal = ccui.LayoutType.HORIZONTAL;
     relative = ccui.LayoutType.RELATIVE;
+    grid = ccui.LayoutType.GRID;
     }
 
 function utils:getLayoutTypeFromString(layoutTypeString)

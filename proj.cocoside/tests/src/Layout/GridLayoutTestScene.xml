@@ -1,0 +1,8 @@
+<Layout size="1.0,1.0" type="relative">
+	<GridLayout alignment="CC" backgroundColor="0,0,0" size="0.5,0.5">
+		<Layout size="100,100" backgroundColor="255,0,0" marginLeft="20" marginTop="20"></Layout>
+		<Layout size="100,100" backgroundColor="0,255,0" marginLeft="20" marginTop="20"></Layout>
+		<Layout size="100,100" backgroundColor="0,0,255" marginLeft="20" marginTop="20"></Layout>
+		<Layout size="100,100" backgroundColor="255,255,255" marginLeft="20" marginTop="20"></Layout>
+	</GridLayout>
+</Layout>

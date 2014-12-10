@@ -226,6 +226,12 @@ widgetInflater.inflateHorizontalLayout = function(xmlNode)
     return layout
 end
 
+widgetInflater.inflateGridLayout = function(xmlNode)
+    local layout = widgetInflater.inflateLayout(xmlNode)
+    layout:setLayoutType(ccui.LayoutType.GRID)
+    return layout
+end
+
 
 lgk.WidgetInflater = { }
 

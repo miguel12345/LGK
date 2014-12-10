@@ -16,6 +16,7 @@ local tests = {
         "VisibilityTestScene";
         "RelativeLayoutTestScene";
         "LayoutWrapContentTestScene";
+        "GridLayoutTestScene";
     };
     
     ["Rendering"] = {
