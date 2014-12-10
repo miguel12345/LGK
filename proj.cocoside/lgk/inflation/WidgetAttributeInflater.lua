@@ -179,6 +179,17 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
         widget:setLogLayout(true)
     end
     
+    -- size percent target dimension
+    local sizePercentTargetDimension = xmlNode["@sizePercentUse"]
+    if sizePercentTargetDimension~=nil then
+    	if sizePercentTargetDimension=="width" then
+            widget:setSizePercentSourceDimension(ccui.Widget.SizePercentSourceDimension.width)
+        elseif sizePercentTargetDimension=="height" then
+            widget:setSizePercentSourceDimension(ccui.Widget.SizePercentSourceDimension.height)
+    	else
+            assert(false,"Found unexpected value "..sizePercentTargetDimension.." for attribute sizePercentUse")
+    	end
+    end
     
     -- apply layout parameter
     if widget:getLayoutParameter() ~= layoutParameter then
