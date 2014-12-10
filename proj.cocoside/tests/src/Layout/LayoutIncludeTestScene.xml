@@ -1,0 +1,7 @@
+<Layout size="1.0,1.0" type="relative">
+	<GridLayout alignment="CC" backgroundColor="0,0,0" size="0.5,0.5">
+		<Include file="LayoutIncludeTestSceneInclude.xml" name="gridElement" newName="gridElementRed" backgroundColor="255,0,0"></Include>
+		<Include file="LayoutIncludeTestSceneInclude.xml" name="gridElement" newName="gridElementGreen" backgroundColor="0,255,0"></Include>
+		<Include file="LayoutIncludeTestSceneInclude.xml" name="gridElement" newName="gridElementBlue" backgroundColor="0,0,255"></Include>
+	</GridLayout>
+</Layout>

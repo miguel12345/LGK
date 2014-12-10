@@ -233,6 +233,69 @@ widgetInflater.inflateGridLayout = function(xmlNode)
 end
 
 
+-- include
+--[[
+
+    Example
+    
+    <include file="<name>.xml">
+        <Update name="<included_element_name>" ...></Update>  
+    </include>
+    
+]]
+
+widgetInflater.inflateInclude = function(xmlNode,handler)
+    
+    -- include is a special case
+    
+    -- first, we check if the file exists
+    local includeFileName = xmlNode["@file"]
+    local xmlFilePath = cc.FileUtils:getInstance():fullPathForFilename(includeFileName)
+    
+    assert(xmlFilePath~=includeFileName,"Include : Couldn't find file with name " .. includeFileName)
+    
+    -- create inflation context from children
+    local children = xmlNode:children()
+    local contextTable = {}
+    
+    for i, child in ipairs(children) do
+        assert(child:name(),"Include element only supports Update elements as children")
+        widgetInflater.inflateIncludeUpdate(child,handler,contextTable)        
+    end
+    
+    widgetInflater.inflateIncludeUpdate(xmlNode,handler,contextTable)
+
+    
+    -- now we proceed with the file inflation itself
+    return lgk.LayoutInflater:inflateXMLFile(xmlFilePath,handler,contextTable)
+end
+
+widgetInflater.inflateIncludeUpdate = function(xmlNode,handler,contextTable)
+
+    local contextTable = contextTable or {}
+    
+    -- here we must return a table that will be used as the inflation context
+    local elementName = xmlNode["@name"]
+    
+    if not elementName then return contextTable end
+    
+    contextTable[elementName] = {}
+    contextTable = contextTable[elementName]
+    local properties = xmlNode:properties()
+    for k, v in pairs(properties) do
+        local propertyName = v["name"]
+        contextTable[propertyName] = xmlNode["@"..propertyName]
+    end
+    
+    if contextTable["newName"] then
+        contextTable["name"] = contextTable["newName"]
+        contextTable["newName"] = nil
+    end
+    
+    return contextTable
+end
+
+
 lgk.WidgetInflater = { }
 
 --- Do stuff
