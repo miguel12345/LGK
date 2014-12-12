@@ -32,7 +32,6 @@ require "lgk.network.JSONRequest"
 -- widgets
 require "lgk.widgets.LazyListView"
 require "lgk.widgets.ImageViewExtended"
-require "lgk.widgets.PageViewExtended"
 
 lgk.getLGKVersion = function()
     return "0.5.0"

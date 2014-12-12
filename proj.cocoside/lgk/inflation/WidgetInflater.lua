@@ -9,14 +9,21 @@ local widgetInflater = {}
 local layoutUtils = lgk.LayoutUtils
 local widgetAttributeInflater = lgk.WidgetAttributeInflater
 
-widgetInflater.inflateLayout = function(xmlNode)
+widgetInflater.inflateLayout = function(xmlNode,actionHandler,elements)
     
     local layout = ccui.Layout:create()
-    widgetAttributeInflater.inflateLayoutAttributes(layout,xmlNode)
+    widgetAttributeInflater.inflateLayoutAttributes(layout,xmlNode,elements)
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        layout:addChild(childElementRef)
+    end
+    
     return layout
 end;
 
-widgetInflater.inflateRootLayout = function(xmlNode)
+widgetInflater.inflateRootLayout = function(xmlNode,actionHandler,elements)
     local layoutUtils = lgk.LayoutUtils
     local layout = ccui.Layout:create()
     local screenSize = cc.Director:getInstance():getWinSize()
@@ -33,12 +40,18 @@ widgetInflater.inflateRootLayout = function(xmlNode)
     layout:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
     layout:setBackGroundColor({r = 0; g = 0; b = 120})
     
-    widgetAttributeInflater.inflateCommonAttributes(layout,xmlNode)
+    widgetAttributeInflater.inflateCommonAttributes(layout,xmlNode,elements)
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        layout:addChild(childElementRef)
+    end
 
     return layout
 end;
 
-widgetInflater.inflateText = function(xmlNode)
+widgetInflater.inflateText = function(xmlNode,actionHandler,elements)
     local layoutUtils = lgk.LayoutUtils
     local fontName = xmlNode["@font"] or "Helvetica"
     local fontSize = tonumber(xmlNode["@fontSize"] or "20")
@@ -48,7 +61,7 @@ widgetInflater.inflateText = function(xmlNode)
         textLayout:enableShadow(layoutUtils:getColorFromString(xmlNode["@shadowColor"]) or {r=0;g=0;b=0;a=255},layoutUtils:getSizeFromString(xmlNode["@shadowOffset"]) or cc.size(2.0,-2.0))
     end
     
-    widgetAttributeInflater.inflateWidgetAttributes(textLayout,xmlNode)
+    widgetAttributeInflater.inflateWidgetAttributes(textLayout,xmlNode,elements)
     
     if xmlNode["@size"] == nil then
         textLayout:ignoreContentAdaptWithSize(false)
@@ -87,10 +100,10 @@ widgetInflater.inflateText = function(xmlNode)
     return textLayout
 end;
 
-widgetInflater.inflateButton = function(xmlNode,actionHandler)
+widgetInflater.inflateButton = function(xmlNode,actionHandler,elements)
     local buttonImage = xmlNode["@image"] or ""
     local buttonLayout = ccui.Button:create(buttonImage)
-    widgetAttributeInflater.inflateWidgetAttributes(buttonLayout,xmlNode)
+    widgetAttributeInflater.inflateWidgetAttributes(buttonLayout,xmlNode,elements)
     
     if xmlNode["@size"] or  xmlNode["@sizePercent"] then
         buttonLayout:ignoreContentAdaptWithSize(false)
@@ -124,26 +137,39 @@ widgetInflater.inflateButton = function(xmlNode,actionHandler)
 end;
 
 
-widgetInflater.inflateListView = function(xmlNode)
+widgetInflater.inflateListView = function(xmlNode,actionHandler,elements)
     local direction = xmlNode["@direction"] and ccui.ListViewDirection[xmlNode["@direction"]] or ccui.ListViewDirection.vertical
     local backgroundImage = xmlNode["@backgroundImage"]
     local listViewLayout = ccui.ListView:create()
     
-    widgetAttributeInflater.inflateLayoutAttributes(listViewLayout,xmlNode)
+    widgetAttributeInflater.inflateLayoutAttributes(listViewLayout,xmlNode,elements)
     
     listViewLayout:setDirection(direction)
     if backgroundImage ~= nil then listViewLayout:setBackGroundImage(backgroundImage) end
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        listViewLayout:addChild(childElementRef)
+    end
     
     return listViewLayout
 end;
 
 
-widgetInflater.inflateScrollView = function(xmlNode)
+widgetInflater.inflateScrollView = function(xmlNode,actionHandler,elements)
     local direction = xmlNode["@direction"] and ccui.ScrollViewDir[xmlNode["@direction"]] or ccui.ScrollViewDir.vertical
     local scrollViewLayout = ccui.ScrollView:create()
     scrollViewLayout:setDirection(direction)
     scrollViewLayout:setInnerContainerSize({width = 100; height = 400})
     widgetAttributeInflater.inflateLayoutAttributes(scrollViewLayout,xmlNode)
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        scrollViewLayout:addChild(childElementRef)
+    end
+    
     return scrollViewLayout
 end;
 
@@ -154,7 +180,7 @@ local imageViewContentModeMap = {
     Repeat = ccui.ImageView.ContentMode.repeating;
 }
 
-widgetInflater.inflateImageView = function(xmlNode)
+widgetInflater.inflateImageView = function(xmlNode,actionHandler,elements)
     local imageUrl = xmlNode["@imageUrl"]
     local imagePath = xmlNode["@image"]
     local imageViewLayout = lgk.ImageViewExtended.create()
@@ -162,7 +188,7 @@ widgetInflater.inflateImageView = function(xmlNode)
         imageViewLayout:ignoreContentAdaptWithSize(false)
     end
     
-    widgetAttributeInflater.inflateWidgetAttributes(imageViewLayout,xmlNode)
+    widgetAttributeInflater.inflateWidgetAttributes(imageViewLayout,xmlNode,elements)
     if imageUrl ~= nil then
         imageViewLayout:setRemoteImage(imageUrl)
     elseif imagePath ~= nil then
@@ -176,58 +202,72 @@ widgetInflater.inflateImageView = function(xmlNode)
     return imageViewLayout
 end;
 
-widgetInflater.inflateLazyListView = function(xmlNode) 
+widgetInflater.inflateLazyListView = function(xmlNode,actionHandler,elements) 
     local lazyListView = gk.LazyListView.create()
     widgetAttributeInflater.inflateLayoutAttributes(lazyListView,xmlNode)
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        lazyListView:addChild(childElementRef)
+    end
+    
     return lazyListView
 end;
 
 
-widgetInflater.inflateTextField = function(xmlNode) 
+widgetInflater.inflateTextField = function(xmlNode,_,elements) 
     local textField = ccui.TextField:create("Teste","fonts/Marker Felt.ttf",20)
-    widgetAttributeInflater.inflateWidgetAttributes(textField,xmlNode)
+    widgetAttributeInflater.inflateWidgetAttributes(textField,xmlNode,elements)
     return textField
 end;
 
-widgetInflater.inflateWebView = function(xmlNode)
+widgetInflater.inflateWebView = function(xmlNode,_,elements)
     local webView = ccexp.WebView:create()
-    widgetAttributeInflater.inflateWidgetAttributes(webView,xmlNode)
+    widgetAttributeInflater.inflateWidgetAttributes(webView,xmlNode,elements)
     webView:ignoreContentAdaptWithSize(false)
     webView:loadURL("http://www.google.com")
     
     return webView
 end
 
-widgetInflater.inflatePageView = function(xmlNode)
-    local pageView = lgk.PageViewExtended.create()
-    widgetAttributeInflater.inflateLayoutAttributes(pageView,xmlNode)
+widgetInflater.inflatePageView = function(xmlNode,actionHandler,elements)
+    local pageView = ccui.PageView:create()
+    widgetAttributeInflater.inflateLayoutAttributes(pageView,xmlNode,elements)
     pageView:setCustomScrollThreshold(30.0)
+    
+    local children = xmlNode:children()
+    for i, child in ipairs(children) do
+        local childElementRef = widgetInflater.inflateFromXMLNode(child,actionHandler,elements)
+        pageView:addPage(childElementRef)
+    end
+    
     return pageView
 end
 
 
 -- aliases
 
-widgetInflater.inflateRelativeLayout = function(xmlNode)
-    local layout = widgetInflater.inflateLayout(xmlNode)
+widgetInflater.inflateRelativeLayout = function(xmlNode,actionHandler,elements)
+    local layout = widgetInflater.inflateLayout(xmlNode,actionHandler,elements)
     layout:setLayoutType(ccui.LayoutType.RELATIVE)
     return layout
 end;
 
-widgetInflater.inflateVerticalLayout = function(xmlNode)
-    local layout = widgetInflater.inflateLayout(xmlNode)
+widgetInflater.inflateVerticalLayout = function(xmlNode,actionHandler,elements)
+    local layout = widgetInflater.inflateLayout(xmlNode,actionHandler,elements)
     layout:setLayoutType(ccui.LayoutType.VERTICAL)
     return layout
 end;
 
-widgetInflater.inflateHorizontalLayout = function(xmlNode)
-    local layout = widgetInflater.inflateLayout(xmlNode)
+widgetInflater.inflateHorizontalLayout = function(xmlNode,actionHandler,elements)
+    local layout = widgetInflater.inflateLayout(xmlNode,actionHandler,elements)
     layout:setLayoutType(ccui.LayoutType.HORIZONTAL)
     return layout
 end
 
-widgetInflater.inflateGridLayout = function(xmlNode)
-    local layout = widgetInflater.inflateLayout(xmlNode)
+widgetInflater.inflateGridLayout = function(xmlNode,actionHandler,elements)
+    local layout = widgetInflater.inflateLayout(xmlNode,actionHandler,elements)
     layout:setLayoutType(ccui.LayoutType.GRID)
     return layout
 end
@@ -244,7 +284,7 @@ end
     
 ]]
 
-widgetInflater.inflateInclude = function(xmlNode,handler)
+widgetInflater.inflateInclude = function(xmlNode,handler,elements)
     
     -- include is a special case
     
@@ -258,56 +298,31 @@ widgetInflater.inflateInclude = function(xmlNode,handler)
     local children = xmlNode:children()
     local contextTable = {}
     
-    for i, child in ipairs(children) do
-        assert(child:name(),"Include element only supports Update elements as children")
-        widgetInflater.inflateIncludeUpdate(child,handler,contextTable)        
-    end
-    
-    widgetInflater.inflateIncludeUpdate(xmlNode,handler,contextTable)
+    widgetInflater.inflateIncludeContext(xmlNode,handler,contextTable)
 
     
     -- now we proceed with the file inflation itself
     return lgk.LayoutInflater:inflateXMLFile(xmlFilePath,handler,contextTable)
 end
 
-widgetInflater.inflateIncludeUpdate = function(xmlNode,handler,contextTable)
+widgetInflater.inflateIncludeContext = function(xmlNode,handler,contextTable)
 
-    local contextTable = contextTable or {}
-    
-    -- here we must return a table that will be used as the inflation context
-    local elementName = xmlNode["@name"]
-    
-    if not elementName then return contextTable end
-    
-    contextTable[elementName] = {}
-    contextTable = contextTable[elementName]
     local properties = xmlNode:properties()
     for k, v in pairs(properties) do
         local propertyName = v["name"]
         contextTable[propertyName] = xmlNode["@"..propertyName]
     end
     
-    if contextTable["newName"] then
-        contextTable["name"] = contextTable["newName"]
-        contextTable["newName"] = nil
-    end
-    
     return contextTable
 end
 
+widgetInflater.inflateFromXMLNode = function(xmlNode,actionHandler,elements)
+    local name = xmlNode:name()
+    local widgetInflateFunctionName = "inflate"..name
+    local inflateFunction = widgetInflater[widgetInflateFunctionName]
+    assert(inflateFunction~=nil,"Not function named ".. widgetInflateFunctionName .. " was found to inflate xml node named "..name.."")
+    return inflateFunction(xmlNode,actionHandler,elements)
+end
 
 lgk.WidgetInflater = { }
-
---- Do stuff
--- @function [parent=#LayoutNodeInflater] inflateNode
--- @param name string cenas
--- @param properties table cenosios
--- @return Node#Node ret (return value: cc.Node)
-local function inflateFromXMLNode(name,xmlNode,actionHandler)
-        local widgetInflateFunctionName = "inflate"..name
-    	local inflateFunction = widgetInflater[widgetInflateFunctionName]
-    	assert(inflateFunction~=nil,"Not function named ".. widgetInflateFunctionName .. "was found to inflate xml node named "..name.."")
-    return inflateFunction(xmlNode,actionHandler)
-    end
-
-lgk.WidgetInflater.inflateFromXMLNode = inflateFromXMLNode
+lgk.WidgetInflater.inflateFromXMLNode = widgetInflater.inflateFromXMLNode

@@ -9,12 +9,16 @@ local widgetAttributeInflater = {}
 
 local layoutUtils = lgk.LayoutUtils
 
-widgetAttributeInflater.inflateCommonAttributes = function(widget,xmlNode)
+widgetAttributeInflater.inflateCommonAttributes = function(widget,xmlNode,elements)
     local widgetXMLNodeName = xmlNode["@name"]
     local widgetCurrentName = widget:getName()
     if widgetXMLNodeName and widgetXMLNodeName~=widgetCurrentName then
         local name = xmlNode["@name"]
-        widget:setName(xmlNode["@name"]) 
+        widget:setName(name)
+        if elements==nil then
+            assert(false)
+        end
+        elements[name] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
             relativeLayoutParameter:setRelativeName(name)
@@ -22,7 +26,7 @@ widgetAttributeInflater.inflateCommonAttributes = function(widget,xmlNode)
     end
 end
 
-widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
+widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode,elements)
 
     local layoutUtils = lgk.LayoutUtils
     local layoutParameter = widget:getLayoutParameter()
@@ -199,14 +203,14 @@ widgetAttributeInflater.inflateWidgetAttributes = function(widget,xmlNode)
     end
     
     -- common
-    widgetAttributeInflater.inflateCommonAttributes(widget,xmlNode)
+    widgetAttributeInflater.inflateCommonAttributes(widget,xmlNode,elements)
     
     return widget
 end
 
-widgetAttributeInflater.inflateLayoutAttributes = function(widget,xmlNode)
+widgetAttributeInflater.inflateLayoutAttributes = function(widget,xmlNode,elements)
 
-    local layout = widgetAttributeInflater.inflateWidgetAttributes(widget,xmlNode)
+    local layout = widgetAttributeInflater.inflateWidgetAttributes(widget,xmlNode,elements)
 
     -- wrap content
     local wrapContent = xmlNode["@wrapContent"]

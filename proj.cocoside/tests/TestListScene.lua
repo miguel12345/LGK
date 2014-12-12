@@ -34,7 +34,7 @@ function TestListScene:updateList()
             elementName = v
         end
         
-        local item = lgk.LayoutInflater:inflateXMLFile("TestListSceneItem.xml",self,{["item"] = {["text"] = elementName}})
+        local item = lgk.LayoutInflater:inflateXMLFile("TestListSceneItem.xml",self,{["itemName"] = elementName})
         self.testElementMap[item] = v
         elementsListView:pushBackCustomItem(item)
     end
