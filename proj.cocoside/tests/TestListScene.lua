@@ -34,7 +34,8 @@ function TestListScene:updateList()
             elementName = v
         end
         
-        local item = lgk.LayoutInflater:inflateXMLFile("TestListSceneItem.xml",self,{["itemName"] = elementName})
+        local item = require("generated_lgx.TestListSceneItem_lgx")(self,self.elements)
+        item:setTitleText(elementName)
         self.testElementMap[item] = v
         elementsListView:pushBackCustomItem(item)
     end
@@ -51,7 +52,8 @@ end
 
 function TestListScene.create()
     local scene = TestListScene.new()
-    scene:addChild(lgk.LayoutInflater:inflateXMLFile("TestListScene.xml",scene))
+    scene.elements = setmetatable({}, {__mode="v"})
+    scene:addChild(require("generated_lgx.TestListScene_lgx")(scene,scene.elements))
     scene:updateList()
     return scene
 end

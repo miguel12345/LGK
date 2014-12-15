@@ -6,12 +6,13 @@ end)
 function TestScene.create(settings)
     local scene = TestScene.new()
     local tests = require("tests")
-    scene:addChild(lgk.LayoutInflater:inflateXMLFile("TestScene.xml",scene))
+    scene.elements = setmetatable({}, {__mode="v"})
+    scene:addChild(require("generated_lgx.TestScene_lgx")(scene,scene.elements))
     tests.setCurrentTest(settings.contentXML)
     scene.elements["leftButton"]:setVisible(tests.existPreviousTests())
     scene.elements["rightButton"]:setVisible(tests.existMoreTests())
     if settings.description then scene.elements["description"]:setString(settings.description) end
-    if settings.contentXML then scene.elements["SceneContentRoot"]:addChild(lgk.LayoutInflater:inflateXMLFile(settings.contentXML .. ".xml",scene)) end
+    if settings.contentXML then scene.elements["SceneContentRoot"]:addChild(require("generated_lgx."..settings.contentXML.."_lgx")(scene,scene.elements)) end
    
     return scene
 end

@@ -1,0 +1,9 @@
+<Layout name="imageParent" logLayout="true" alignment="CC" size="1.0,400" type="relative">
+	
+	<ImageView alignment="CC" name="image" image="farm.jpg" size="200,200">
+		
+	</ImageView>
+	
+	<Button onClick="switchImageTexture" alignment="BC" marginBottom="50" text="Switch Image" font="fonts/Marker Felt.ttf" fontSize="30"></Button>
+	
+</Layout>

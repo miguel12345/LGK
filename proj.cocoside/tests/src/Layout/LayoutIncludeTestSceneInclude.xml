@@ -1,3 +1,0 @@
-<RelativeLayout name="{{gridElementName}}" size="0.3,0.3" sizePercentUse="width" backgroundColor="{{gridBgColor}}" marginLeft="10" marginTop="10">
-	<Layout name="whiteMiddle" backgroundColor="255,255,255" alignment="{{whiteMiddleAlignment}}" size="0.5,0.5"></Layout>
-</RelativeLayout>

@@ -7,7 +7,7 @@ end)
 
 function TestScene:animate()
 
-    local transition = self.transitionInflater:getTransition()
+    local transition = self.transition
 
     if transition:isDone() or transition:isReversed() then
         transition:reverse()
@@ -19,7 +19,7 @@ end
 function TestScene.create()
     local scene = TestScene.new()
 
-    scene.transitionInflater = lgk.TransitionInflater:create("TransitionSingleTestSceneSpec.xml",scene.elements)
+    scene.transition = require("generated_lgx.TransitionSingleTestSceneSpec_lgx")(scene,scene.elements)
 
     scene.execute = function(self)
 

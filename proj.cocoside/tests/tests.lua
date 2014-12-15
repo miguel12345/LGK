@@ -17,7 +17,6 @@ local tests = {
         "RelativeLayoutTestScene";
         "LayoutWrapContentTestScene";
         "GridLayoutTestScene";
-        "LayoutIncludeTestScene";
     };
     
     ["Rendering"] = {
@@ -33,7 +32,6 @@ local tests = {
             "TransitionSingleTestScene";
             "TransitionSequenceTestScene";
             "TransitionGroupTestScene";
-            "TransitionInflaterTestScene"
     };
     
     ["Widgets"] = {
