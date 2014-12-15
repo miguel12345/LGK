@@ -195,6 +195,10 @@ function Transition:create(animatableWidget)
     
 end
 
+function Transition:createFromLGX(lgxModule)
+    return require("generated_lgx."..lgxModule.."_lgx")({},{})
+end
+
 
 lgk.Transition = Transition
 
