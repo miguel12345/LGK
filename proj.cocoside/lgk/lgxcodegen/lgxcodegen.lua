@@ -594,14 +594,14 @@ end
     
         lgxCodeGen.addCodeLine([[
 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end]])
+            widget:setLayoutParameter(layoutParameter)
+        end]])
 
     else
         lgxCodeGen.addCodeLine([[
 if layoutParameterChanged then
-    widget:layoutParameterChanged()
-end]])
+            widget:layoutParameterChanged()
+        end]])
 
     end
     
