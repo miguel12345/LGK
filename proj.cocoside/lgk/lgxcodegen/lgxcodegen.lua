@@ -430,7 +430,8 @@ end]])
             else
             
             lgxCodeGen.addCodeLine([[
-local alignment = ]]..relativeAlignmentType..[[
+local alignment = ]]..relativeAlignmentType)
+            lgxCodeGen.addCodeLine([[
 if layoutParameter:getAlign() ~=alignment then
     layoutParameterChanged = true
     layoutParameter:setAlign(alignment)
@@ -438,8 +439,8 @@ end]])
             
             lgxCodeGen.addCodeLine([[
 local layoutRelativeToWidgetName = layoutParameter:getRelativeToWidgetName()
-if ]]..relativeToWidgetName..[[ ~= layoutRelativeToWidgetName then
-    layoutParameter:setRelativeToWidgetName(]]..relativeToWidgetName..[[)
+if ']]..relativeToWidgetName..[[' ~= layoutRelativeToWidgetName then
+    layoutParameter:setRelativeToWidgetName(']]..relativeToWidgetName..[[')
     layoutParameterChanged = true
 end]])
             
@@ -719,7 +720,12 @@ widgetInflater.inflateText = function(xmlNode,isNew)
     local fontName = xmlNode["@font"] or "Helvetica"
     local fontSize = (xmlNode["@fontSize"] or "20")
     local text = xmlNode["@text"] or ""
-    lgxCodeGen.addCodeLine("local widget =  ccui.Text:create('"..text.."','"..fontName.."',"..fontSize..")")
+    
+    if isNew then
+        lgxCodeGen.addCodeLine("local widget =  ccui.Text:create('"..text.."','"..fontName.."',"..fontSize..")")
+    else
+        lgxCodeGen.addCodeLine("widget:setString('"..text.."')")
+    end
     
 --    local textLayout = ccui.Text:create(text,fontName,fontSize)
     if xmlNode["@shadow"] == "true" or (xmlNode["@shadow"] == nil and (xmlNode["@shadowColor"]~=nil or xmlNode["@shadowOffset"]~=nil)) then
@@ -729,7 +735,7 @@ widgetInflater.inflateText = function(xmlNode,isNew)
     
     widgetAttributeInflater.inflateWidgetAttributes(xmlNode,isNew)
     
-    if xmlNode["@size"] == nil then
+    if xmlNode["@size"] == nil and isNew then
         lgxCodeGen.addCodeLine([[widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -740,7 +746,7 @@ widgetInflater.inflateText = function(xmlNode,isNew)
 --        textLayout:setAdaptLabelScaleWithContentSize(false)
 --        textLayout:setAdaptFontSizeToFit(false)
 --        textLayout:setContentSize({width=0;height=0})
-    elseif xmlNode["@fontSize"] == nil then
+    elseif xmlNode["@fontSize"] == nil and isNew then
         lgxCodeGen.addCodeLine([[widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)  
         widget:setAdaptFontSizeToFit(true)
@@ -748,7 +754,7 @@ widgetInflater.inflateText = function(xmlNode,isNew)
 --        textLayout:ignoreContentAdaptWithSize(false)
 --        textLayout:setAdaptLabelScaleWithContentSize(false)  
 --        textLayout:setAdaptFontSizeToFit(true)
-    else
+    elseif isNew then
         local size = layoutUtils:getSizeFromString(xmlNode["@size"])
         if size.height == 0 or size.width == 0 then
         lgxCodeGen.addCodeLine("widget:setAdaptLabelScaleWithContentSize(false)")
@@ -893,8 +899,10 @@ widgetInflater.inflateImageView = function(xmlNode,isNew)
     local imageUrl = xmlNode["@imageUrl"]
     local imagePath = xmlNode["@image"]
     
-    lgxCodeGen.addCodeLine("local widget = lgk.ImageViewExtended.create()")
-
+    if isNew then
+        lgxCodeGen.addCodeLine("local widget = lgk.ImageViewExtended.create()")
+    end
+    
 --    local imageViewLayout = lgk.ImageViewExtended.create()
     if xmlNode["@size"] then
         lgxCodeGen.addCodeLine("widget:ignoreContentAdaptWithSize(false)")
@@ -928,7 +936,9 @@ end;
 
 
 widgetInflater.inflateTextField = function(xmlNode,isNew) 
-    lgxCodeGen.addCodeLine("local widget = ccui.TextField:create('Teste','fonts/Marker Felt.ttf',20)")
+    if isNew then
+        lgxCodeGen.addCodeLine("local widget = ccui.TextField:create('Teste','fonts/Marker Felt.ttf',20)")
+    end
 --    local textField = ccui.TextField:create("Teste","fonts/Marker Felt.ttf",20)
     widgetAttributeInflater.inflateWidgetAttributes(xmlNode,isNew)
 end;

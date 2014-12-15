@@ -7,7 +7,8 @@ end)
 function LGKScene.create(name)
     local scene = LGKScene.new()
     scene:setName(name)
-    scene:addChild(lgk.LayoutInflater:inflateXMLFile(name .. ".xml",scene))
+    scene.elements = setmetatable({}, {__mode="v"})
+    scene:addChild(require("generated_lgx."..name.."_lgx")(scene,scene.elements))
     return scene
 end
 
