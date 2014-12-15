@@ -1,0 +1,11 @@
+<VerticalLayout alignment="CC" size="0.8,0.8">
+	<Include module="IncludeLayoutTestSceneInclude">
+		<RelativeLayout name="element" newName="greenElement" backgroundColor="#00FF00"></RelativeLayout>
+	</Include>
+	<Include module="IncludeLayoutTestSceneInclude">
+		<RelativeLayout name="element" newName="redElement" backgroundColor="#FF0000"> </RelativeLayout>
+	</Include>
+	<Include module="IncludeLayoutTestSceneInclude">
+		<RelativeLayout name="element" newName="blueElement" backgroundColor="#0000FF"></RelativeLayout>
+	</Include>
+</VerticalLayout>

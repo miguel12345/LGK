@@ -8,20 +8,8 @@ lgk.json = require "lgk.utils.json_utf"
 require "lgk.utils.luaExtensions"
 require "lgk.utils.stringExtended"
 
--- xml
-lgk.xmlSimple = require "lgk.xml.xmlSimple"
-require "lgk.xml.XMLScene"
-require "lgk.xml.XMLParser"
-
--- layout
-require "lgk.inflation.LayoutUtils"
-require "lgk.inflation.WidgetAttributeInflater"
-require "lgk.inflation.WidgetInflater"
-require "lgk.inflation.LayoutInflater"
-
 -- animation
 require "lgk.animation.Transition"
-require "lgk.animation.TransitionInflater"
 
 -- scene
 require "lgk.scene.LGKScene"
