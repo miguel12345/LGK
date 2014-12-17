@@ -19,6 +19,7 @@ local tests = {
         "LayoutWrapContentTestScene";
         "GridLayoutTestScene";
         "IncludeLayoutTestScene";
+        "PressedBackgroundColorTestScene"
     };
     
     ["Rendering"] = {

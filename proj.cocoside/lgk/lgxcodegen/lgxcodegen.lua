@@ -322,19 +322,7 @@ widgetAttributeInflater.inflateCommonAttributes = function(xmlNode,isNew)
     end
 end
 
-widgetAttributeInflater.inflateWidgetAttributes = function(xmlNode,isNew)
-
-    local layoutUtils = utils
---    local layoutParameter = widget:getLayoutParameter()
-    lgxCodeGen.addCodeLine("local layoutParameter = widget:getLayoutParameter()")
-
-    if not isNew then
-        lgxCodeGen.addCodeLine("local layoutParameterChanged = false")
-    end
-
-    -- parse background color
-    local backgroundColorString = xmlNode["@backgroundColor"]
-
+widgetAttributeInflater.processBackgroundColor = function(backgroundColorString)
     if backgroundColorString ~= nil then
         local backgroundColor1, backgroundColor2 = layoutUtils:getColorFromString(backgroundColorString)
 
@@ -362,7 +350,21 @@ widgetAttributeInflater.inflateWidgetAttributes = function(xmlNode,isNew)
             lgxCodeGen.addCodeLine("widget:setBackGroundColor("..backgroundColor1..")")
         end
     end  
+end
 
+widgetAttributeInflater.inflateWidgetAttributes = function(xmlNode,isNew)
+
+    local layoutUtils = utils
+--    local layoutParameter = widget:getLayoutParameter()
+    lgxCodeGen.addCodeLine("local layoutParameter = widget:getLayoutParameter()")
+
+    if not isNew then
+        lgxCodeGen.addCodeLine("local layoutParameterChanged = false")
+    end
+
+    -- parse background color
+    local backgroundColorString = xmlNode["@backgroundColor"]
+    widgetAttributeInflater.processBackgroundColor(backgroundColorString) 
 
     if xmlNode["@size"] ~= nil then 
         local sizeString = string.split(xmlNode["@size"],",")
@@ -610,6 +612,23 @@ if layoutParameterChanged then
     local propagateTouchToChildren =  xmlNode["@propagateTouchToChildren"]
     if propagateTouchToChildren ~= nil then
         lgxCodeGen.addCodeLine("widget:setPropagateTouchEventsToChildren("..propagateTouchToChildren..")")
+    end
+    
+    -- pressed background color
+    local pressedBackgroundColor =  xmlNode["@pressedBackgroundColor"]
+    if pressedBackgroundColor ~= nil then
+        lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)")
+        lgxCodeGen.addCodeLine("local previousBackgroundColor = nil")
+        lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
+        lgxCodeGen.addCodeLineTab()
+        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
+        lgxCodeGen.addCodeLineTab()
+        lgxCodeGen.addCodeLine("previousBackgroundColor = widget:getBackGroundColor()")
+        widgetAttributeInflater.processBackgroundColor(pressedBackgroundColor)
+        lgxCodeGen.removeCodeLineTab()
+        lgxCodeGen.addCodeLine("elseif((touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) and  previousBackgroundColor~=nil) then widget:setBackGroundColor(previousBackgroundColor) end")
+        lgxCodeGen.removeCodeLineTab()
+        lgxCodeGen.addCodeLine("end)")
     end
 
     -- common

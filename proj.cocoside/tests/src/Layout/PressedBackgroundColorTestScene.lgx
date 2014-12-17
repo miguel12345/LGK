@@ -1,0 +1,4 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<RelativeLayout name="element" alignment="CC" size="0.5,0.5" backgroundColor="#FF0000" pressedBackgroundColor="#00FF00">
+	</RelativeLayout>
+</Layout>
