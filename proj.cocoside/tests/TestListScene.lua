@@ -59,9 +59,11 @@ function TestListScene.create()
 end
 
 function TestListScene:executeAllTestsInElement()
-    local totalTests, testsPassed = require("tests").executeAllTestsInCurrentElement()
-    local testsResultScene = require("TestResultScene").create(totalTests, testsPassed)
-    cc.Director:getInstance():replaceScene(testsResultScene)
+    cc.Director:getInstance():getScheduler():performFunctionInCocosThread(function()
+        local totalTests, testsPassed = require("tests").executeAllTestsInCurrentElement()
+        local testsResultScene = require("TestResultScene").create(totalTests, testsPassed)
+        cc.Director:getInstance():replaceScene(testsResultScene)
+    end)
 end
 
 return TestListScene

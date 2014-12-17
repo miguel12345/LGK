@@ -7,6 +7,7 @@ cc.FileUtils:getInstance():addSearchPath("tests/src/Widgets/UIWebView")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Widgets/UIPageView")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Device")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Animation")
+cc.FileUtils:getInstance():addSearchPath("tests/src/Touch")
 
 local tests = {
 
@@ -33,6 +34,10 @@ local tests = {
             "TransitionSingleTestScene";
             "TransitionSequenceTestScene";
             "TransitionGroupTestScene";
+    };
+    
+    ["Touch"] = {
+            "TouchPropagateChildrenTestScene";
     };
     
     ["Widgets"] = {

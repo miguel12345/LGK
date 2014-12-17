@@ -1,0 +1,6 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<RelativeLayout name="parent" propagateTouchToChildren="true" alignment="CC" size="0.5,0.5" backgroundColor="#FF0000">
+		<Text name="child1" alignment="BL" size="0.4,-1" text="Text 1"></Text>
+		<Text name="child2" alignment="BR" size="0.4,-1" text="Text 2"></Text>
+	</RelativeLayout>
+</Layout>

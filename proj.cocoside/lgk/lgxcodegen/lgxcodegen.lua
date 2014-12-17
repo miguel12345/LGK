@@ -263,7 +263,7 @@ end
 
 function utils:hex2rgb(hex)
     local hex2 = hex:gsub("#","")
-    return "{r = "..tonumber("0x"..hex2:sub(1,2)).."; g = "..tonumber("0x"..hex2:sub(3,4)).."; b = "..tonumber("0x"..hex2:sub(5,6)).."}"
+    return "{r = "..tonumber("0x"..hex2:sub(1,2)).."; g = "..tonumber("0x"..hex2:sub(3,4)).."; b = "..tonumber("0x"..hex2:sub(5,6)).."; a = 255}"
 end
 
 
@@ -606,20 +606,13 @@ if layoutParameterChanged then
 
     end
     
---    if widget:getLayoutParameter() ~= layoutParameter then
---        widget:setLayoutParameter(layoutParameter)
---    elseif layoutParameterChanged then
---        widget:layoutParameterChanged()
---    end
+    -- propagate touch to children
+    local propagateTouchToChildren =  xmlNode["@propagateTouchToChildren"]
+    if propagateTouchToChildren ~= nil then
+        lgxCodeGen.addCodeLine("widget:setPropagateTouchEventsToChildren("..propagateTouchToChildren..")")
+    end
 
---    lgxCodeGen.addCodeLine([[if widget:getLayoutParameter() ~= layoutParameter then
---        widget:setLayoutParameter(layoutParameter)
---    elseif layoutParameterChanged then
---        widget:layoutParameterChanged()
---    end]])
-
---
---    -- common
+    -- common
     widgetAttributeInflater.inflateCommonAttributes(xmlNode,isNew)
 
 --    return widget
@@ -921,6 +914,10 @@ widgetInflater.inflateImageView = function(xmlNode,isNew)
     if xmlNode["@contentMode"] ~= nil then
         lgxCodeGen.addCodeLine("widget:setContentMode("..imageViewContentModeMap[xmlNode["@contentMode"]]..")")
 --        imageViewLayout:setContentMode(imageViewContentModeMap[xmlNode["@contentMode"]])
+    end
+    
+    if xmlNode["@color"] ~= nil then
+        lgxCodeGen.addCodeLine("widget:getVirtualRenderer():setColor("..layoutUtils:getColorFromString(xmlNode["@color"])..")")
     end
     
 end;
