@@ -14,6 +14,7 @@ local widgetInflater = {}
 local transitionInflater = {}
 local utils = {}
 local widgetAttributeInflater = {}
+local nodeCreate = nil
 local genFolderName = nil
 
 function string:split(sep)
@@ -334,13 +335,13 @@ widgetAttributeInflater.processBackgroundColor = function(backgroundColorString)
 --            widget:setBackGroundColor(backgroundColor1,backgroundColor2);
             lgxCodeGen.addCodeLine("widget:setBackGroundColor("..backgroundColor1..","..backgroundColor2..")")
 
-            local backgroundColorOrientationString = xmlNode["@backgroundColorOrientation"]
-            if backgroundColorOrientationString ~= nil then
-                local gradientVector = layoutUtils:getColorGradientVectorFromString(backgroundColorOrientationString)
---                widget:setBackGroundColorVector(gradientVector)
-                lgxCodeGen.addCodeLine("widget:setBackGroundColorVector("..gradientVector..")")
-
-            end
+--            local backgroundColorOrientationString = xmlNode["@backgroundColorOrientation"]
+--            if backgroundColorOrientationString ~= nil then
+--                local gradientVector = layoutUtils:getColorGradientVectorFromString(backgroundColorOrientationString)
+----                widget:setBackGroundColorVector(gradientVector)
+--                lgxCodeGen.addCodeLine("widget:setBackGroundColorVector("..gradientVector..")")
+--
+--            end
 
         elseif backgroundColor1 ~= nil then
 --            widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
@@ -613,23 +614,6 @@ if layoutParameterChanged then
     if propagateTouchToChildren ~= nil then
         lgxCodeGen.addCodeLine("widget:setPropagateTouchEventsToChildren("..propagateTouchToChildren..")")
     end
-    
-    -- pressed background color
-    local pressedBackgroundColor =  xmlNode["@pressedBackgroundColor"]
-    if pressedBackgroundColor ~= nil then
-        lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)")
-        lgxCodeGen.addCodeLine("local previousBackgroundColor = nil")
-        lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
-        lgxCodeGen.addCodeLineTab()
-        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
-        lgxCodeGen.addCodeLineTab()
-        lgxCodeGen.addCodeLine("previousBackgroundColor = widget:getBackGroundColor()")
-        widgetAttributeInflater.processBackgroundColor(pressedBackgroundColor)
-        lgxCodeGen.removeCodeLineTab()
-        lgxCodeGen.addCodeLine("elseif((touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) and  previousBackgroundColor~=nil) then widget:setBackGroundColor(previousBackgroundColor) end")
-        lgxCodeGen.removeCodeLineTab()
-        lgxCodeGen.addCodeLine("end)")
-    end
 
     -- common
     widgetAttributeInflater.inflateCommonAttributes(xmlNode,isNew)
@@ -731,11 +715,11 @@ widgetInflater.inflateText = function(xmlNode,isNew)
     local layoutUtils = utils
     local fontName = xmlNode["@font"] or "Helvetica"
     local fontSize = (xmlNode["@fontSize"] or "20")
-    local text = xmlNode["@text"] or ""
+    local text = xmlNode["@text"]
     
     if isNew then
-        lgxCodeGen.addCodeLine("local widget =  ccui.Text:create('"..text.."','"..fontName.."',"..fontSize..")")
-    else
+        lgxCodeGen.addCodeLine("local widget =  ccui.Text:create('"..(text or nil).."','"..fontName.."',"..fontSize..")")
+    elseif text then
         lgxCodeGen.addCodeLine("widget:setString('"..text.."')")
     end
     
@@ -1047,6 +1031,98 @@ widgetInflater.inflateInclude = function(xmlNode,handler,elements)
     lgxCodeGen.addCodeLine("widget = widgetTemp")
 end
 
+function firstToUpper(str)
+    return (str:gsub("^%l", string.upper))
+end
+
+widgetInflater.getGetterStringForProperty = function(propertyName,xmlNodeName)
+    
+    if propertyName == "backgroundColor" then
+        return "getBackGroundColor()"
+    end
+    
+    if propertyName == "color" and xmlNodeName == "ImageView" then
+    	return "getVirtualRenderer():getColor()"
+    end
+    
+    return "get"..firstToUpper(propertyName).."()"
+        
+end
+
+widgetInflater.getSetterStringForProperty = function(propertyName,propertyValue,xmlNodeName)
+    
+    if propertyName == "backgroundColor" then
+        return "setBackGroundColor("..propertyValue..")"
+    end
+    
+    if propertyName == "color" and xmlNodeName == "ImageView" then
+        return "getVirtualRenderer():setColor("..propertyValue..")"
+    end
+    
+    return "set"..firstToUpper(propertyName).."("..propertyValue..")"
+        
+end
+
+
+widgetInflater.inflatePressedStateFromXMLNode = function(xmlNode,createNew)
+
+    -- search for node properties that start with pressed_ prefix
+    local properties = xmlNode:properties()
+    local pressedState = {}
+    local pressedStateXmlNode = nil
+--        print("properties "..#properties)
+    
+    for k, v in pairs(properties) do
+        local propertyName = v["name"]
+--        print("property name "..propertyName)
+        if string.sub(propertyName,1,8) == "pressed_" then
+--            print("xml node name "..xmlNode:name())
+            pressedStateXmlNode = pressedStateXmlNode or nodeCreate(xmlNode:name())
+            local propertyNameWidthoutPrefix = string.sub(propertyName,9)
+--            print("propertyNameWidthoutPrefix "..propertyNameWidthoutPrefix)
+            
+            pressedStateXmlNode:addProperty(propertyNameWidthoutPrefix,xmlNode["@"..propertyName])
+        end
+    end
+    
+    -- pressed state
+    if pressedStateXmlNode ~= nil then
+        lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)")
+        local pressedStateXmlNodeProperties = pressedStateXmlNode:properties()
+         
+        -- generate code to create old state to nil
+        for k, v in pairs(pressedStateXmlNodeProperties) do
+            local propertyName = v["name"]
+            lgxCodeGen.addCodeLine("local "..propertyName.."Old = nil")
+        end
+         
+        lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
+        lgxCodeGen.addCodeLineTab()
+        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
+        lgxCodeGen.addCodeLineTab()
+        
+         -- generate code to store old state
+        for k, v in pairs(pressedStateXmlNodeProperties) do
+            local propertyName = v["name"]
+            lgxCodeGen.addCodeLine(propertyName.."Old = widget:" .. widgetInflater.getGetterStringForProperty(propertyName,pressedStateXmlNode:name()))
+        end
+        
+        widgetInflater.inflateFromXMLNode(pressedStateXmlNode,false)
+        
+        lgxCodeGen.removeCodeLineTab()
+        lgxCodeGen.addCodeLine("elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then")
+        
+         -- generate code to restore old state
+        for k, v in pairs(pressedStateXmlNodeProperties) do
+            local propertyName = v["name"]
+            lgxCodeGen.addCodeLine("widget:" .. widgetInflater.getSetterStringForProperty(propertyName,propertyName.."Old",pressedStateXmlNode:name()))
+        end
+        
+        lgxCodeGen.addCodeLine("end")
+        lgxCodeGen.removeCodeLineTab()
+        lgxCodeGen.addCodeLine("end)")
+    end
+end
 
 widgetInflater.inflateFromXMLNode = function(xmlNode,createNew)
     local name = xmlNode:name()
@@ -1059,6 +1135,9 @@ widgetInflater.inflateFromXMLNode = function(xmlNode,createNew)
     else
 --    assert(inflateFunction~=nil,"Not function named ".. widgetInflateFunctionName .. " was found to inflate xml node named "..name.."")
         inflateFunction(xmlNode,createNew)
+        widgetInflater.inflatePressedStateFromXMLNode(xmlNode,createNew)
+        
+        -- process state for widget
         return true
     end
 end
@@ -1221,7 +1300,7 @@ function lgxCodeGen.newParser()
     end
 
     function XmlParser:ParseArgs(node, s)
-        string.gsub(s, "(%w+)=([\"'])(.-)%2", function(w, _, a)
+        string.gsub(s, "([%w_]+)=([\"'])(.-)%2", function(w, _, a)
             node:addProperty(w, self:FromXmlString(a))
         end)
     end
@@ -1337,6 +1416,14 @@ function newNode(name)
 
     return node
 end
+
+nodeCreate = newNode
+
+-- debug -- comment below before commit
+--arg = {}
+--arg[1] = "/Users/miguelferreira/projetos/pessoal/LGK/lib/proj.cocoside/generated_lgx"
+--arg[2] = "/Users/miguelferreira/projetos/pessoal/LGK/lib/proj.cocoside/tests/src/Layout/PressedBackgroundColorTestScene.lgx"
+-- debug -- comment above before commit
 
 if(arg and arg[2] and arg[2]=="-r") then
     

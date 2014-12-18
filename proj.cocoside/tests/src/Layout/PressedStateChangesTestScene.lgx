@@ -1,0 +1,5 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<RelativeLayout name="element" alignment="CC" size="0.5,0.5" propagateTouchToChildren="true" backgroundColor="#FF0000" pressed_backgroundColor="#00FF00">
+			<Text name="text" alignment="BC" textColor="#00FF00" pressed_textColor="#FF0000" text="Text Here" size="0.5,-1"/>
+	</RelativeLayout>
+</Layout>

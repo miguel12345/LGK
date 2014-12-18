@@ -39,7 +39,7 @@ return function(p_actionHandler,p_elements)
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
             widget:setSizeValues({width = 0.5; height = -1})
             layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
-            local alignment = ccui.RelativeAlign.centerInParent
+            local alignment = ccui.RelativeAlign.alignParentBottomCenterHorizontal
             layoutParameter:setAlign(alignment)
             if layoutParameter ~= nil then
             widget:setLayoutParameter(layoutParameter)
