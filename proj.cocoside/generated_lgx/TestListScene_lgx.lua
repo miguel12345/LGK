@@ -20,8 +20,8 @@ return function(p_actionHandler,p_elements)
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 1.0; height = 1.0})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['root'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -37,8 +37,8 @@ end
             layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
             layoutParameter:setMargin({left = 0;right = 0;top = 20;bottom = 0;})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['elements'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -63,8 +63,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 10;right = 0;top = 10;bottom = 0;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['homeButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -72,12 +72,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["goHome"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['goHome'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -92,8 +94,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 10;top = 10;bottom = 0;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['executeTestsButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -101,12 +103,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["executeAllTestsInElement"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['executeAllTestsInElement'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)

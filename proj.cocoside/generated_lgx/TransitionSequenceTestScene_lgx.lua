@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -20,16 +20,18 @@ end
         layoutParameter:setAlign(ccui.RelativeAlign.locationAboveCenter)
         layoutParameter:setRelativeToWidgetName('area')
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setTitleText('Animate')
         widget:setTitleFontSize(40)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["animate"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['animate'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -37,7 +39,7 @@ end
         local widget = ccui.Layout:create()
         local layoutParameter = widget:getLayoutParameter()
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
-        widget:setBackGroundColor({r = 0; g = 0; b = 0})
+        widget:setBackGroundColor({r = 0; g = 0; b = 0; a = 255})
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 0.5; height = 0.5})
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
@@ -45,8 +47,8 @@ end
         layoutParameter:setAlign(alignment)
         widget:setLogLayout(true)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['area'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -64,8 +66,8 @@ end
             local alignment = ccui.RelativeAlign.alignParentTopLeft
             layoutParameter:setAlign(alignment)
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['animatableElement'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -86,8 +88,8 @@ end
             local alignment = ccui.RelativeAlign.alignParentTopCenterHorizontal
             layoutParameter:setAlign(alignment)
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['animatableElement2'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -108,8 +110,8 @@ end
             local alignment = ccui.RelativeAlign.alignParentTopRight
             layoutParameter:setAlign(alignment)
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['animatableElement3'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then

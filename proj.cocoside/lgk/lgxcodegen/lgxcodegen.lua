@@ -7,6 +7,11 @@
 local lgxCodeGen = {}
 local xml = nil
 local codeGenStringTable = {} -- all generated code must be inserted here
+local codeGenBeforeReturnStack = {}
+local codeGenTouchBeganStringTable = {} -- all generated code that will take effect when the touch began event is fired should go here
+local codeGenTouchEndedStringTable = {} -- all generated code that will take effect when the touch end event is fired should go here
+local codeGenTouchEndedOrCancelledStringTable = {} -- all generated code that will take effect when the touch end or cancel event is fired should go here
+
 local codeGenStringCurrentIndent = 0
 local codeGenStringIndentString = ""
 
@@ -42,6 +47,90 @@ function lgxCodeGen.getCodeFinalString()
     local s = table.concat(codeGenStringTable, "\n")
     codeGenStringTable = {} --reset code lines table for future use
     return s
+end
+
+function lgxCodeGen.addOnTouchBeganCodeLine(codeLine)
+    table.insert(codeGenTouchBeganStringTable, codeGenStringIndentString..codeLine)
+end
+
+function lgxCodeGen.addOnTouchEndCodeLine(codeLine)
+    table.insert(codeGenTouchEndedStringTable, codeGenStringIndentString..codeLine)
+end
+
+function lgxCodeGen.addOnTouchCancelOrEndCodeLine(codeLine)
+    table.insert(codeGenTouchEndedOrCancelledStringTable, codeGenStringIndentString..codeLine)
+end
+
+function lgxCodeGen.generateTouchRelatedCode()
+
+    -- check early exit
+    if #codeGenTouchBeganStringTable==0 and #codeGenTouchEndedStringTable==0 and #codeGenTouchEndedOrCancelledStringTable==0 then
+    	return
+    end
+
+    -- generate touch code
+    
+    lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)") 
+    lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
+    lgxCodeGen.addCodeLineTab()
+    
+    -- touch began
+    local touchBeganAcknowledged = false
+    if #codeGenTouchBeganStringTable>0 then
+        touchBeganAcknowledged = true
+        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
+        lgxCodeGen.addCodeLineTab()
+        
+        for _,codeLine in pairs(codeGenTouchBeganStringTable) do
+            lgxCodeGen.addCodeLine(codeLine)
+        end
+        
+        lgxCodeGen.removeCodeLineTab()
+    end
+    
+    -- touch ended or cancelled
+    if #codeGenTouchEndedStringTable>0 or #codeGenTouchEndedOrCancelledStringTable>0 then
+         local touchEndStringCondition ="if"
+        if touchBeganAcknowledged then
+            touchEndStringCondition ="elseif"
+        end
+        touchEndStringCondition = touchEndStringCondition .. "(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then"
+        
+        lgxCodeGen.addCodeLine(touchEndStringCondition)
+        lgxCodeGen.addCodeLineTab()
+        
+            -- touch ended
+            if #codeGenTouchEndedStringTable>0 then
+                lgxCodeGen.addCodeLine("if touchType == ccui.TouchEventType.ended then")
+                lgxCodeGen.addCodeLineTab()
+                
+                for _,codeLine in pairs(codeGenTouchEndedStringTable) do
+                    lgxCodeGen.addCodeLine(codeLine)
+                end
+                
+                lgxCodeGen.removeCodeLineTab()
+                lgxCodeGen.addCodeLine("end")
+            end
+            
+            -- touch ended or cancelled
+            if #codeGenTouchEndedOrCancelledStringTable>0 then
+                for _,codeLine in pairs(codeGenTouchEndedOrCancelledStringTable) do
+                    lgxCodeGen.addCodeLine(codeLine)
+                end
+            end
+            
+        lgxCodeGen.removeCodeLineTab()
+        lgxCodeGen.addCodeLine("end")
+    end
+        
+        
+    lgxCodeGen.removeCodeLineTab()
+    lgxCodeGen.addCodeLine("end)")
+        
+    -- delete all touch related tables
+    codeGenTouchBeganStringTable = {}
+    codeGenTouchEndedStringTable = {}
+    codeGenTouchEndedOrCancelledStringTable = {}
 end
 
 function lgxCodeGen.parseXML(xmlText)     
@@ -614,6 +703,20 @@ if layoutParameterChanged then
     if propagateTouchToChildren ~= nil then
         lgxCodeGen.addCodeLine("widget:setPropagateTouchEventsToChildren("..propagateTouchToChildren..")")
     end
+    
+    
+    -- onclick
+    local onClickAction = xmlNode["@onClick"]
+    if onClickAction then
+            lgxCodeGen.addOnTouchEndCodeLine("p_actionHandler['"..onClickAction.."'](p_actionHandler,widget)")
+--            lgxCodeGen.addCodeLine([[local handlerFunction = function(sender,eventType)
+--                                        if eventType == ccui.TouchEventType.ended then
+--                                            p_actionHandler["]]..onClickAction..[["](p_actionHandler,widget,eventType)
+--                                        end
+--                                    end
+--                                    widget:addTouchEventListener(handlerFunction)]])
+    
+    end
 
     -- common
     widgetAttributeInflater.inflateCommonAttributes(xmlNode,isNew)
@@ -810,27 +913,6 @@ widgetInflater.inflateButton = function(xmlNode,isNew)
     if xmlNode["@fontName"] then
         lgxCodeGen.addCodeLine("widget:setTitleFontName("..xmlNode["@fontName"]..")")
 --        buttonLayout:setTitleFontName(xmlNode["@fontName"])
-    end
-    
-    local onClickAction = xmlNode["@onClick"]
-    if onClickAction then
-    
-            lgxCodeGen.addCodeLine([[local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["]]..onClickAction..[["](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)]])
-            
-    
---        local handlerFunction = function(sender,eventType)
---            if eventType == ccui.TouchEventType.ended then
---                actionHandler[onClickAction](actionHandler,buttonLayout,eventType)
---            end
---        end
---
---        buttonLayout:addTouchEventListener(handlerFunction)
-    
     end
     
 --    return buttonLayout
@@ -1087,7 +1169,7 @@ widgetInflater.inflatePressedStateFromXMLNode = function(xmlNode,createNew)
     
     -- pressed state
     if pressedStateXmlNode ~= nil then
-        lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)")
+--        lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)")
         local pressedStateXmlNodeProperties = pressedStateXmlNode:properties()
          
         -- generate code to create old state to nil
@@ -1096,35 +1178,41 @@ widgetInflater.inflatePressedStateFromXMLNode = function(xmlNode,createNew)
             lgxCodeGen.addCodeLine("local "..propertyName.."Old = nil")
         end
          
-        lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
-        lgxCodeGen.addCodeLineTab()
-        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
-        lgxCodeGen.addCodeLineTab()
+--        lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
+--        lgxCodeGen.addCodeLineTab()
+--        lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
+--        lgxCodeGen.addCodeLineTab()
         
          -- generate code to store old state
         for k, v in pairs(pressedStateXmlNodeProperties) do
             local propertyName = v["name"]
-            lgxCodeGen.addCodeLine(propertyName.."Old = widget:" .. widgetInflater.getGetterStringForProperty(propertyName,pressedStateXmlNode:name()))
+            lgxCodeGen.addOnTouchBeganCodeLine(propertyName.."Old = widget:" .. widgetInflater.getGetterStringForProperty(propertyName,pressedStateXmlNode:name()))
         end
         
-        widgetInflater.inflateFromXMLNode(pressedStateXmlNode,false)
+        -- swap addCodeLine for addOnTouchBeganCodeLine
+        local oldAddCodeLine = lgxCodeGen.addCodeLine
+        lgxCodeGen.addCodeLine = lgxCodeGen.addOnTouchBeganCodeLine
         
-        lgxCodeGen.removeCodeLineTab()
-        lgxCodeGen.addCodeLine("elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then")
+        widgetInflater.inflateFromXMLNode(pressedStateXmlNode,false,true)
+        
+        lgxCodeGen.addCodeLine = oldAddCodeLine
+        
+--        lgxCodeGen.removeCodeLineTab()
+--        lgxCodeGen.addCodeLine("elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then")
         
          -- generate code to restore old state
         for k, v in pairs(pressedStateXmlNodeProperties) do
             local propertyName = v["name"]
-            lgxCodeGen.addCodeLine("widget:" .. widgetInflater.getSetterStringForProperty(propertyName,propertyName.."Old",pressedStateXmlNode:name()))
+            lgxCodeGen.addOnTouchCancelOrEndCodeLine("widget:" .. widgetInflater.getSetterStringForProperty(propertyName,propertyName.."Old",pressedStateXmlNode:name()))
         end
         
-        lgxCodeGen.addCodeLine("end")
-        lgxCodeGen.removeCodeLineTab()
-        lgxCodeGen.addCodeLine("end)")
+--        lgxCodeGen.addCodeLine("end")
+--        lgxCodeGen.removeCodeLineTab()
+--        lgxCodeGen.addCodeLine("end)")
     end
 end
 
-widgetInflater.inflateFromXMLNode = function(xmlNode,createNew)
+widgetInflater.inflateFromXMLNode = function(xmlNode,createNew,ignoreTouchGen)
     local name = xmlNode:name()
     local widgetInflateFunctionName = "inflate"..name
     local inflateFunction = widgetInflater[widgetInflateFunctionName]
@@ -1133,10 +1221,32 @@ widgetInflater.inflateFromXMLNode = function(xmlNode,createNew)
         lgxCodeGen.addCodeLine("return transition")
         return false
     else
+    
+    if not ignoreTouchGen then
+        codeGenTouchBeganStringTable = {}
+        codeGenTouchEndedStringTable = {}
+        codeGenTouchEndedOrCancelledStringTable = {}
+    
+    table.insert(codeGenBeforeReturnStack,codeGenTouchBeganStringTable)
+    table.insert(codeGenBeforeReturnStack,codeGenTouchEndedStringTable)
+    table.insert(codeGenBeforeReturnStack,codeGenTouchEndedOrCancelledStringTable)
+    
+     end
+     
 --    assert(inflateFunction~=nil,"Not function named ".. widgetInflateFunctionName .. " was found to inflate xml node named "..name.."")
-        inflateFunction(xmlNode,createNew)
-        widgetInflater.inflatePressedStateFromXMLNode(xmlNode,createNew)
-        
+    inflateFunction(xmlNode,createNew)
+    
+    if not ignoreTouchGen then
+        codeGenTouchEndedOrCancelledStringTable = table.remove(codeGenBeforeReturnStack)
+        codeGenTouchEndedStringTable = table.remove(codeGenBeforeReturnStack)
+        codeGenTouchBeganStringTable = table.remove(codeGenBeforeReturnStack)      
+    end
+
+    widgetInflater.inflatePressedStateFromXMLNode(xmlNode,createNew)
+
+    if not ignoreTouchGen then
+        lgxCodeGen.generateTouchRelatedCode()       
+    end
         -- process state for widget
         return true
     end
@@ -1422,7 +1532,7 @@ nodeCreate = newNode
 -- debug -- comment below before commit
 --arg = {}
 --arg[1] = "/Users/miguelferreira/projetos/pessoal/LGK/lib/proj.cocoside/generated_lgx"
---arg[2] = "/Users/miguelferreira/projetos/pessoal/LGK/lib/proj.cocoside/tests/src/Layout/PressedBackgroundColorTestScene.lgx"
+--arg[2] = "/Users/miguelferreira/projetos/pessoal/LGK/lib/proj.cocoside/tests/src/Touch/MultipleTouchActionsTestScene.lgx"
 -- debug -- comment above before commit
 
 if(arg and arg[2] and arg[2]=="-r") then

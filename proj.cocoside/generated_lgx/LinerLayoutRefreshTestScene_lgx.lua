@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
         local widget = ccui.Layout:create()
@@ -18,8 +18,8 @@ end
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['parent'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -35,8 +35,8 @@ end
             widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
             widget:setSizeValues({width = 200; height = 200})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             return widget
         end)()
         widget:addChild(child)
@@ -48,8 +48,8 @@ end
             widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
             widget:setSizeValues({width = 200; height = 200})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['green'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -67,8 +67,8 @@ end
             widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
             widget:setSizeValues({width = 200; height = 200})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['blue'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -90,16 +90,18 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 150;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setTitleText('Expand Green Area')
         widget:setTitleFontSize(30)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["expandGreenArea"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['expandGreenArea'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -112,16 +114,18 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 100;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setTitleText('Shrink Green Area')
         widget:setTitleFontSize(30)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["shrinkGreenArea"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['shrinkGreenArea'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)

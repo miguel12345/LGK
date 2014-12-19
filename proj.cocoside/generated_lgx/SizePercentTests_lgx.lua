@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
         local widget = ccui.Layout:create()
@@ -18,8 +18,8 @@ end
         local alignment = ccui.RelativeAlign.alignParentTopCenterHorizontal
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['fullScreenWidth'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -34,8 +34,8 @@ end
             local alignment = ccui.RelativeAlign.centerInParent
             layoutParameter:setAlign(alignment)
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['description'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -66,8 +66,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 200;bottom = 0;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setLayoutType(ccui.LayoutType.HORIZONTAL)
         local child = (function()
             local widget = ccui.Layout:create()
@@ -77,8 +77,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 0.5; height = 1.0})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['halfScreenWidth'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -93,8 +93,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['description'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -120,8 +120,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 0.5; height = 1.0})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget =  ccui.Text:create('size=0.5,1.0','fonts/Marker Felt.ttf',30)
@@ -130,8 +130,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['description'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then

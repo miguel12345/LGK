@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -19,8 +19,8 @@ end
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 0.333; height = 1.0})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setLayoutType(ccui.LayoutType.VERTICAL)
         local child = (function()
             local widget = ccui.Layout:create()
@@ -28,8 +28,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -41,8 +41,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFill1'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -61,8 +61,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -81,8 +81,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -94,8 +94,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewScaleToFit1'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -114,8 +114,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -134,8 +134,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -147,8 +147,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFit1'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -167,8 +167,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -190,8 +190,8 @@ end
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 0.333; height = 1.0})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setLayoutType(ccui.LayoutType.VERTICAL)
         local child = (function()
             local widget = ccui.Layout:create()
@@ -199,8 +199,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -212,8 +212,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFill2'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -232,8 +232,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -252,8 +252,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -265,8 +265,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewScaleToFit2'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -285,8 +285,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -305,8 +305,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -318,8 +318,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFit2'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -338,8 +338,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -361,8 +361,8 @@ end
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 0.333; height = 1.0})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setLayoutType(ccui.LayoutType.VERTICAL)
         local child = (function()
             local widget = ccui.Layout:create()
@@ -370,8 +370,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -383,8 +383,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFill3'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -403,8 +403,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -423,8 +423,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -436,8 +436,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewScaleToFit3'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -456,8 +456,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -476,8 +476,8 @@ end
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 0.3})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             widget:setLayoutType(ccui.LayoutType.RELATIVE)
             local child = (function()
                 local widget = lgk.ImageViewExtended.create()
@@ -489,8 +489,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 p_elements['imageViewAspectFit3'] = widget
                 local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -509,8 +509,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)

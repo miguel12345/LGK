@@ -1,0 +1,4 @@
+<Layout size="1.0,1.0" type="relative" name="root">
+	<RelativeLayout name="touchElement" alignment="CC" size="0.5,0.5" propagateTouchToChildren="true" onClick="showHideElement" backgroundColor="#FF0000" pressed_backgroundColor="#00FF00"></RelativeLayout>
+	<RelativeLayout name="showHideElement" alignBottomCenterOf="touchElement" opacity="0" size="100,100" marginTop="10" backgroundColor="#0000FF"></RelativeLayout>
+</Layout>

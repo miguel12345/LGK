@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -24,8 +24,8 @@ end
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['red'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -46,8 +46,8 @@ end
         layoutParameter:setAlign(ccui.RelativeAlign.locationRightOfTopAlign)
         layoutParameter:setRelativeToWidgetName('red')
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['green'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -68,8 +68,8 @@ end
         layoutParameter:setAlign(ccui.RelativeAlign.locationLeftOfTopAlign)
         layoutParameter:setRelativeToWidgetName('red')
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         return widget
     end)()
     widget:addChild(child)
@@ -84,8 +84,8 @@ end
         layoutParameter:setAlign(ccui.RelativeAlign.locationBelowLeftAlign)
         layoutParameter:setRelativeToWidgetName('red')
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         return widget
     end)()
     widget:addChild(child)
@@ -102,8 +102,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 10;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         return widget
     end)()
     widget:addChild(child)

@@ -8,9 +8,9 @@ return function(p_actionHandler,p_elements)
         end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
-    if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
-        relativeLayoutParameter:setRelativeName("root")
-    end
+        if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
+            relativeLayoutParameter:setRelativeName("root")
+        end
         
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
@@ -47,9 +47,9 @@ return function(p_actionHandler,p_elements)
         end
         p_elements['deviceInches'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
-    if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
-        relativeLayoutParameter:setRelativeName("deviceInches")
-    end
+        if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
+            relativeLayoutParameter:setRelativeName("deviceInches")
+        end
         
         widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)  

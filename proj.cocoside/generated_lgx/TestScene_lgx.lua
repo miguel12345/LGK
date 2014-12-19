@@ -23,8 +23,8 @@ return function(p_actionHandler,p_elements)
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['SceneContentRoot'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -46,8 +46,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 10;right = 0;top = 10;bottom = 0;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['homeButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -55,12 +55,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["goHome"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['goHome'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -75,8 +77,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 10;bottom = 0;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['leftButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -84,12 +86,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["goToPreviousScene"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['goToPreviousScene'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -102,8 +106,8 @@ end
         local alignment = ccui.RelativeAlign.alignParentRightBottom
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['rightButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -111,12 +115,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["goToNextScene"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['goToNextScene'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -131,8 +137,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 10;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['executeButton'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -140,12 +146,14 @@ end
         end
         
         widget:ignoreContentAdaptWithSize(false)
-        local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["execute"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if touchType == ccui.TouchEventType.ended then
+                            p_actionHandler['execute'](p_actionHandler,widget)
+                end
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -158,8 +166,8 @@ end
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 20;})
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['description'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then

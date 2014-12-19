@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -20,8 +20,8 @@ end
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['gradientsRoot'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -34,13 +34,12 @@ end
             local widget = ccui.Layout:create()
             local layoutParameter = widget:getLayoutParameter()
             widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.gradient)
-            widget:setBackGroundColor({r = 4; g = 175; b = 255},{r = 4; g = 232; b = 197})
-            widget:setBackGroundColorVector({x = 1.0; y = 0.0})
+            widget:setBackGroundColor({r = 4; g = 175; b = 255; a = 255},{r = 4; g = 232; b = 197; a = 255})
             widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
             widget:setSizeValues({width = 200; height = 200})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['blueGradient'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -55,8 +54,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)
@@ -72,13 +71,12 @@ end
             local widget = ccui.Layout:create()
             local layoutParameter = widget:getLayoutParameter()
             widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.gradient)
-            widget:setBackGroundColor({r = 255; g = 0; b = 243},{r = 106; g = 0; b = 232})
-            widget:setBackGroundColorVector({x = 0.0; y = -1.0})
+            widget:setBackGroundColor({r = 255; g = 0; b = 243; a = 255},{r = 106; g = 0; b = 232; a = 255})
             widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
             widget:setSizeValues({width = 200; height = 200})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             p_elements['pinkGradient'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -93,8 +91,8 @@ end
                 local alignment = ccui.RelativeAlign.centerInParent
                 layoutParameter:setAlign(alignment)
                 if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
                 widget:ignoreContentAdaptWithSize(false)
         widget:setAdaptLabelScaleWithContentSize(false)
         widget:setAdaptFontSizeToFit(false)

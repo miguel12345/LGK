@@ -13,8 +13,8 @@ return function(p_actionHandler,p_elements)
     layoutParameter:setAlign(alignment)
 end
         if layoutParameterChanged then
-    widget:layoutParameterChanged()
-end
+            widget:layoutParameterChanged()
+        end
         widget:setName('animatableElement')
         p_elements['animatableElement'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();

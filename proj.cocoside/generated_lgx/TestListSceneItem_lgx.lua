@@ -6,8 +6,8 @@ return function(p_actionHandler,p_elements)
     layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
     layoutParameter:setGravity(ccui.LinearGravity.centerHorizontal)
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['item'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -17,11 +17,13 @@ end
     widget:ignoreContentAdaptWithSize(false)
     widget:setTitleText('')
     widget:setTitleFontSize(40)
-    local handlerFunction = function(sender,eventType)
-                                        if eventType == ccui.TouchEventType.ended then
-                                            p_actionHandler["clickedElement"](p_actionHandler,widget,eventType)
-                                        end
-                                    end
-                                    widget:addTouchEventListener(handlerFunction)
+    widget:setTouchEnabled(true)
+    widget:addTouchEventListener(function(widget,touchType)
+        if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+            if touchType == ccui.TouchEventType.ended then
+                    p_actionHandler['clickedElement'](p_actionHandler,widget)
+            end
+        end
+    end)
     return widget
 end

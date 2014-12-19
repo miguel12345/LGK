@@ -4,8 +4,8 @@ return function(p_actionHandler,p_elements)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -22,8 +22,8 @@ end
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
         widget:setCustomScrollThreshold(30.0)
         local child = (function()
             local widget = ccui.Layout:create()
@@ -31,8 +31,8 @@ end
             widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
             widget:setBackGroundColor({r = 255; g = 0; b = 0; a = 255})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             return widget
         end)()
         widget:addChild(child)
@@ -42,8 +42,8 @@ end
             widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
             widget:setBackGroundColor({r = 0; g = 255; b = 0; a = 255})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             return widget
         end)()
         widget:addChild(child)
@@ -53,8 +53,8 @@ end
             widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
             widget:setBackGroundColor({r = 0; g = 255; b = 255; a = 255})
             if layoutParameter ~= nil then
-    widget:setLayoutParameter(layoutParameter)
-end
+            widget:setLayoutParameter(layoutParameter)
+        end
             return widget
         end)()
         widget:addChild(child)

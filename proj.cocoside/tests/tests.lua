@@ -39,6 +39,7 @@ local tests = {
     
     ["Touch"] = {
             "TouchPropagateChildrenTestScene";
+            "MultipleTouchActionsTestScene";
     };
     
     ["Widgets"] = {

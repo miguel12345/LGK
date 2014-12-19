@@ -1,41 +1,55 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
     local layoutParameter = widget:getLayoutParameter()
-    widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
-    widget:setSizeValues({width = 1.0; height = 400})
-    layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
-    local alignment = ccui.RelativeAlign.centerInParent
-    layoutParameter:setAlign(alignment)
-    widget:setLogLayout(true)
+    widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
+    widget:setSizeValues({width = 1.0; height = 1.0})
     if layoutParameter ~= nil then
             widget:setLayoutParameter(layoutParameter)
         end
-    p_elements['imageParent'] = widget
+    p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
-            relativeLayoutParameter:setRelativeName("imageParent")
+            relativeLayoutParameter:setRelativeName("root")
         end
         
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
-        local widget = lgk.ImageViewExtended.create()
-        widget:ignoreContentAdaptWithSize(false)
+        local widget =  ccui.Text:create('Scene 1','Helvetica',20)
         local layoutParameter = widget:getLayoutParameter()
-        widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
-        widget:setSizeValues({width = 200; height = 200})
+        widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
+        widget:setSizeValues({width = 0.5; height = -1})
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
         if layoutParameter ~= nil then
             widget:setLayoutParameter(layoutParameter)
         end
-        p_elements['image'] = widget
+        p_elements['text'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
-            relativeLayoutParameter:setRelativeName("image")
+            relativeLayoutParameter:setRelativeName("text")
         end
         
-        widget:loadTexture('farm.jpg')
+        widget:ignoreContentAdaptWithSize(false)
+        widget:setAdaptLabelScaleWithContentSize(false)  
+        widget:setAdaptFontSizeToFit(true)
+        
+        widget:setTextColor({r = 0; g = 255; b = 0; a = 255})
+        local textColorOld = nil
+        widget:setTouchEnabled(true)
+        widget:addTouchEventListener(function(widget,touchType)
+            if(touchType == ccui.TouchEventType.began) then
+                        textColorOld = widget:getTextColor()
+                        local layoutParameter = widget:getLayoutParameter()
+                        local layoutParameterChanged = false
+                        if layoutParameterChanged then
+            widget:layoutParameterChanged()
+        end
+                        widget:setTextColor({r = 255; g = 0; b = 0; a = 255})
+            elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                        widget:setTextColor(textColorOld)
+            end
+        end)
         return widget
     end)()
     widget:addChild(child)
@@ -43,20 +57,18 @@ return function(p_actionHandler,p_elements)
         local widget = ccui.Button:create('')
         local layoutParameter = widget:getLayoutParameter()
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
-        local alignment = ccui.RelativeAlign.alignParentBottomCenterHorizontal
-        layoutParameter:setAlign(alignment)
-        layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
-        layoutParameter:setMargin({left = 0;right = 0;top = 0;bottom = 50;})
+        layoutParameter:setAlign(ccui.RelativeAlign.locationBelowCenter)
+        layoutParameter:setRelativeToWidgetName('text')
         if layoutParameter ~= nil then
             widget:setLayoutParameter(layoutParameter)
         end
-        widget:setTitleText('Switch Image')
-        widget:setTitleFontSize(30)
+        widget:setTitleText('Go to next scene')
+        widget:setTitleFontSize(20)
         widget:setTouchEnabled(true)
         widget:addTouchEventListener(function(widget,touchType)
             if(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
                 if touchType == ccui.TouchEventType.ended then
-                            p_actionHandler['switchImageTexture'](p_actionHandler,widget)
+                            p_actionHandler['goToNextScene'](p_actionHandler,widget)
                 end
             end
         end)

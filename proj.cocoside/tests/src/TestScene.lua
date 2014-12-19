@@ -13,6 +13,7 @@ function TestScene.create(settings)
     scene.elements["rightButton"]:setVisible(tests.existMoreTests())
     if settings.description then scene.elements["description"]:setString(settings.description) end
     if settings.contentXML then scene.elements["SceneContentRoot"]:addChild(require("generated_lgx."..settings.contentXML.."_lgx")(scene,scene.elements)) end
+    scene:setName(settings.contentXML)
    
     return scene
 end
