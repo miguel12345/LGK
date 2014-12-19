@@ -8,6 +8,7 @@ cc.FileUtils:getInstance():addSearchPath("tests/src/Widgets/UIPageView")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Device")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Animation")
 cc.FileUtils:getInstance():addSearchPath("tests/src/Touch")
+cc.FileUtils:getInstance():addSearchPath("tests/src/Scene")
 
 local tests = {
 
@@ -62,6 +63,9 @@ local tests = {
         };
     };
     
+    ["Scene"]  = {
+        "PushPopSceneTestScene";
+    };    
 }
 
 local parentMap = {}

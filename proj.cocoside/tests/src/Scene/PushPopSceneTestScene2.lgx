@@ -1,0 +1,4 @@
+<RootLayout size="1.0,1.0" type="relative" name="root">
+	<Text name="text" alignment="CC" textColor="#00FF00" pressed_textColor="#FF0000" text="Scene 2" size="0.5,-1"/>
+	<Button onClick="goToPreviousScene" alignBottomCenterOf="text" text="Go to previous scene" fontSize="20"/>
+</RootLayout>

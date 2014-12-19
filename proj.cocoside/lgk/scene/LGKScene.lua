@@ -18,4 +18,25 @@ function LGKScene.getSceneClass(name)
     end)
 end
 
+local sceneStack = {}
+
+function LGKScene.pushScene(sceneName)
+    local scene = require(sceneName).create()
+    assert(scene,"Trying to push scene with name "..sceneName.." that was not found")
+    table.insert(sceneStack,cc.Director:getInstance():getRunningScene():getName())
+    
+    cc.Director:getInstance():replaceScene(cc.LGKCustomTransition:create(0.3,scene))
+end
+
+function LGKScene.popScene()
+    
+    assert(#sceneStack>0,"There are not scenes in the stack")
+    
+    local lastSceneName = table.remove(sceneStack)
+    local scene = require(lastSceneName).create()
+    assert(scene,"Trying to pop to a scene with name "..lastSceneName.." that was not found")
+    
+    cc.Director:getInstance():replaceScene(cc.TransitionSlideInL:create(0.3,scene))
+end
+
 lgk.LGKScene = LGKScene
