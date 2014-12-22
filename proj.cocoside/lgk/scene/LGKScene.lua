@@ -18,14 +18,14 @@ function LGKScene.getSceneClass(name)
     end)
 end
 
-local sceneStack = {}
+sceneStack = {}
 
 function LGKScene.pushScene(sceneName)
     local scene = require(sceneName).create()
     assert(scene,"Trying to push scene with name "..sceneName.." that was not found")
     table.insert(sceneStack,cc.Director:getInstance():getRunningScene():getName())
     
-    cc.Director:getInstance():replaceScene(cc.LGKCustomTransition:create(0.3,scene))
+    cc.Director:getInstance():replaceScene(cc.LGKCustomTransition:create(0.5,scene))
 end
 
 function LGKScene.popScene()

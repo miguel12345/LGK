@@ -57,8 +57,10 @@ return function(p_actionHandler,p_elements)
             widget:setTextColor({r = 0; g = 255; b = 0; a = 255})
             local textColorOld = nil
             widget:setTouchEnabled(true)
+            local _alreadyTouching = false
             widget:addTouchEventListener(function(widget,touchType)
                 if(touchType == ccui.TouchEventType.began) then
+                    if _alreadyTouching then return else _alreadyTouching = true end
                                 textColorOld = widget:getTextColor()
                                 local layoutParameter = widget:getLayoutParameter()
                                 local layoutParameterChanged = false
@@ -67,6 +69,7 @@ return function(p_actionHandler,p_elements)
         end
                                 widget:setTextColor({r = 255; g = 0; b = 0; a = 255})
                 elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                    if not _alreadyTouching then return else _alreadyTouching = false end
                                 widget:setTextColor(textColorOld)
                 end
             end)
@@ -76,8 +79,10 @@ return function(p_actionHandler,p_elements)
         widget:setLayoutType(ccui.LayoutType.RELATIVE)
         local backgroundColorOld = nil
         widget:setTouchEnabled(true)
+        local _alreadyTouching = false
         widget:addTouchEventListener(function(widget,touchType)
             if(touchType == ccui.TouchEventType.began) then
+                if _alreadyTouching then return else _alreadyTouching = true end
                         backgroundColorOld = widget:getBackGroundColor()
                         local layoutParameter = widget:getLayoutParameter()
                         local layoutParameterChanged = false
@@ -88,6 +93,7 @@ return function(p_actionHandler,p_elements)
         end
                         widget:setLayoutType(ccui.LayoutType.RELATIVE)
             elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
+                if not _alreadyTouching then return else _alreadyTouching = false end
                         widget:setBackGroundColor(backgroundColorOld)
             end
         end)

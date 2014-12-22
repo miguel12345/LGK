@@ -71,6 +71,11 @@ function lgxCodeGen.generateTouchRelatedCode()
     -- generate touch code
     
     lgxCodeGen.addCodeLine("widget:setTouchEnabled(true)") 
+    
+    if #codeGenTouchBeganStringTable>0 then
+        lgxCodeGen.addCodeLine("local _alreadyTouching = false")
+    end
+    
     lgxCodeGen.addCodeLine("widget:addTouchEventListener(function(widget,touchType)")
     lgxCodeGen.addCodeLineTab()
     
@@ -80,6 +85,8 @@ function lgxCodeGen.generateTouchRelatedCode()
         touchBeganAcknowledged = true
         lgxCodeGen.addCodeLine("if(touchType == ccui.TouchEventType.began) then")
         lgxCodeGen.addCodeLineTab()
+        
+      lgxCodeGen.addCodeLine("if _alreadyTouching then return else _alreadyTouching = true end")
         
         for _,codeLine in pairs(codeGenTouchBeganStringTable) do
             lgxCodeGen.addCodeLine(codeLine)
@@ -98,6 +105,10 @@ function lgxCodeGen.generateTouchRelatedCode()
         
         lgxCodeGen.addCodeLine(touchEndStringCondition)
         lgxCodeGen.addCodeLineTab()
+        
+        if #codeGenTouchBeganStringTable>0 then
+            lgxCodeGen.addCodeLine("if not _alreadyTouching then return else _alreadyTouching = false end")
+        end
         
             -- touch ended
             if #codeGenTouchEndedStringTable>0 then
