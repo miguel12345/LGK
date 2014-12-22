@@ -25,6 +25,24 @@ function LGKScene.pushScene(sceneName)
     assert(scene,"Trying to push scene with name "..sceneName.." that was not found")
     table.insert(sceneStack,cc.Director:getInstance():getRunningScene():getName())
     
+    -- back key - BEGIN
+    local function onKeyReleased(keyCode, event)
+
+        local label = event:getCurrentTarget()
+
+        if keyCode == cc.KeyCode.KEY_BACK then
+            LGKScene.popScene()
+        end
+    end
+
+    local listener = cc.EventListenerKeyboard:create()
+    listener:registerScriptHandler(onKeyReleased, cc.Handler.EVENT_KEYBOARD_RELEASED )
+
+    local eventDispatcher = scene:getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener,scene)
+    --back key - END
+    
+    
     cc.Director:getInstance():replaceScene(cc.LGKCustomTransition:create(0.5,scene))
 end
 
