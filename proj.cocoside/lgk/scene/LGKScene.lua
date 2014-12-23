@@ -43,7 +43,7 @@ function LGKScene.pushScene(sceneName)
     --back key - END
     
     
-    cc.Director:getInstance():replaceScene(cc.LGKCustomTransition:create(0.5,scene))
+    cc.Director:getInstance():replaceScene(cc.TransitionMoveInR:create(0.5,scene))
 end
 
 function LGKScene.popScene()
@@ -54,7 +54,7 @@ function LGKScene.popScene()
     local scene = require(lastSceneName).create()
     assert(scene,"Trying to pop to a scene with name "..lastSceneName.." that was not found")
     
-    cc.Director:getInstance():replaceScene(cc.TransitionSlideInL:create(0.3,scene))
+    cc.Director:getInstance():replaceScene(cc.TransitionMoveOutR:create(0.5,scene))
 end
 
 lgk.LGKScene = LGKScene
