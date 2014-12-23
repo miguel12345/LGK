@@ -1,11 +1,8 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
-    local layoutParameter = widget:getLayoutParameter()
+    widget:setCascadeOpacityEnabled(true)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
-    if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -15,11 +12,12 @@ return function(p_actionHandler,p_elements)
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
         local widget = ccui.Layout:create()
-        local layoutParameter = widget:getLayoutParameter()
+        widget:setCascadeOpacityEnabled(true)
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 255; g = 0; b = 0; a = 255})
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 300})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
@@ -38,9 +36,9 @@ return function(p_actionHandler,p_elements)
     local child = (function()
         local widget =  ccui.Text:create('Width','Proxima Nova Light.ttf',20)
         widget:enableShadow({r = 255; g = 255; b = 255; a = 60},{width = -4; height= 2})
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 300})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
@@ -63,11 +61,12 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Layout:create()
-        local layoutParameter = widget:getLayoutParameter()
+        widget:setCascadeOpacityEnabled(true)
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 0; g = 255; b = 0; a = 255})
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 350; height = 40})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.alignParentTopCenterHorizontal
         layoutParameter:setAlign(alignment)
@@ -88,9 +87,9 @@ return function(p_actionHandler,p_elements)
     local child = (function()
         local widget =  ccui.Text:create('Height','fonts/Proxima Nova Light.ttf',20)
         widget:enableShadow({r = 255; g = 255; b = 255; a = 60},{width = -4; height= 2})
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 350; height = 40})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.alignParentTopCenterHorizontal
         layoutParameter:setAlign(alignment)
@@ -115,9 +114,9 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget =  ccui.Text:create('Unspecified height','Proxima Nova Light.ttf',20)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
         widget:setSizeValues({width = .3; height = -1})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         layoutParameter:setAlign(ccui.RelativeAlign.locationAboveCenter)
         layoutParameter:setRelativeToWidgetName('fitByWidthArea')

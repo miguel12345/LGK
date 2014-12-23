@@ -15,8 +15,8 @@ return function(p_actionHandler,p_elements)
     layoutParameter:setAlign(alignment)
 end
             if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
+                widget:layoutParameterChanged()
+            end
             widget:setName('animatableElement')
             p_elements['animatableElement'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
@@ -43,8 +43,8 @@ end
     layoutParameter:setAlign(alignment)
 end
             if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
+                widget:layoutParameterChanged()
+            end
             widget:setName('animatableElement2')
             p_elements['animatableElement2'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
@@ -71,8 +71,8 @@ end
     layoutParameter:setAlign(alignment)
 end
             if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
+                widget:layoutParameterChanged()
+            end
             widget:setName('animatableElement3')
             p_elements['animatableElement3'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();

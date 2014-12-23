@@ -16,9 +16,9 @@ return function(p_actionHandler,p_elements)
         
     local child = (function()
         local widget =  ccui.Text:create('Scene 2','Helvetica',20)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
         widget:setSizeValues({width = 0.5; height = -1})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
@@ -43,11 +43,6 @@ return function(p_actionHandler,p_elements)
             if(touchType == ccui.TouchEventType.began) then
                 if _alreadyTouching then return else _alreadyTouching = true end
                         textColorOld = widget:getTextColor()
-                        local layoutParameter = widget:getLayoutParameter()
-                        local layoutParameterChanged = false
-                        if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
                         widget:setTextColor({r = 255; g = 0; b = 0; a = 255})
             elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
                 if not _alreadyTouching then return else _alreadyTouching = false end
@@ -59,7 +54,7 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Button:create('')
-        local layoutParameter = widget:getLayoutParameter()
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         layoutParameter:setAlign(ccui.RelativeAlign.locationBelowCenter)
         layoutParameter:setRelativeToWidgetName('text')

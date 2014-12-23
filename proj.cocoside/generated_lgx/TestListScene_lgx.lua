@@ -16,12 +16,9 @@ return function(p_actionHandler,p_elements)
         
     local child = (function()
         local widget = ccui.Layout:create()
-        local layoutParameter = widget:getLayoutParameter()
+        widget:setCascadeOpacityEnabled(true)
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 1.0; height = 1.0})
-        if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
         p_elements['root'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -31,14 +28,14 @@ return function(p_actionHandler,p_elements)
         widget:setLayoutType(ccui.LayoutType.VERTICAL)
         local child = (function()
             local widget = ccui.ListView:create()
-            local layoutParameter = widget:getLayoutParameter()
             widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
             widget:setSizeValues({width = 1.0; height = 1.0})
+            local layoutParameter = nil
             layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
             layoutParameter:setMargin({left = 0;right = 0;top = 20;bottom = 0;})
             if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
+                widget:setLayoutParameter(layoutParameter)
+            end
             p_elements['elements'] = widget
             local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -54,9 +51,9 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Button:create('home.png')
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 50; height = 50})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.alignParentTopLeft
         layoutParameter:setAlign(alignment)
@@ -85,9 +82,9 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Button:create('execute-test-icon.png')
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 50; height = 50})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.alignParentTopRight
         layoutParameter:setAlign(alignment)

@@ -1,25 +1,21 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
-    local layoutParameter = widget:getLayoutParameter()
+    widget:setCascadeOpacityEnabled(true)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 0.8; height = 0.8})
+    local layoutParameter = nil
     layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
     local alignment = ccui.RelativeAlign.centerInParent
     layoutParameter:setAlign(alignment)
     if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
+        widget:setLayoutParameter(layoutParameter)
+    end
     local child = (function()
         local widget = require('generated_lgx.IncludeLayoutTestSceneInclude_lgx')(p_actionHandler,p_elements,{})
         local widgetTemp = widget
         widget = p_elements['element']
-        local layoutParameter = widget:getLayoutParameter()
-        local layoutParameterChanged = false
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 0; g = 255; b = 0; a = 255})
-        if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
         widget:setName('greenElement')
         p_elements['greenElement'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
@@ -36,13 +32,8 @@ return function(p_actionHandler,p_elements)
         local widget = require('generated_lgx.IncludeLayoutTestSceneInclude_lgx')(p_actionHandler,p_elements,{})
         local widgetTemp = widget
         widget = p_elements['element']
-        local layoutParameter = widget:getLayoutParameter()
-        local layoutParameterChanged = false
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 255; g = 0; b = 0; a = 255})
-        if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
         widget:setName('redElement')
         p_elements['redElement'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
@@ -59,13 +50,8 @@ return function(p_actionHandler,p_elements)
         local widget = require('generated_lgx.IncludeLayoutTestSceneInclude_lgx')(p_actionHandler,p_elements,{})
         local widgetTemp = widget
         widget = p_elements['element']
-        local layoutParameter = widget:getLayoutParameter()
-        local layoutParameterChanged = false
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 0; g = 0; b = 255; a = 255})
-        if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
         widget:setName('blueElement')
         p_elements['blueElement'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();

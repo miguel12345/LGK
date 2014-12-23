@@ -1,11 +1,8 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
-    local layoutParameter = widget:getLayoutParameter()
+    widget:setCascadeOpacityEnabled(true)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
-    if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -15,11 +12,12 @@ return function(p_actionHandler,p_elements)
     widget:setLayoutType(ccui.LayoutType.RELATIVE)
     local child = (function()
         local widget = ccui.Layout:create()
-        local layoutParameter = widget:getLayoutParameter()
+        widget:setCascadeOpacityEnabled(true)
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 255; g = 0; b = 0; a = 255})
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
         widget:setSizeValues({width = 0.5; height = 0.5})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
@@ -41,13 +39,8 @@ return function(p_actionHandler,p_elements)
             if(touchType == ccui.TouchEventType.began) then
                 if _alreadyTouching then return else _alreadyTouching = true end
                         backgroundColorOld = widget:getBackGroundColor()
-                        local layoutParameter = widget:getLayoutParameter()
-                        local layoutParameterChanged = false
                         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
                         widget:setBackGroundColor({r = 0; g = 255; b = 0; a = 255})
-                        if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end
                         widget:setLayoutType(ccui.LayoutType.RELATIVE)
             elseif(touchType == ccui.TouchEventType.ended or touchType == ccui.TouchEventType.canceled) then
                 if not _alreadyTouching then return else _alreadyTouching = false end
@@ -62,11 +55,12 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Layout:create()
-        local layoutParameter = widget:getLayoutParameter()
+        widget:setCascadeOpacityEnabled(true)
         widget:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
         widget:setBackGroundColor({r = 0; g = 0; b = 255; a = 255})
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 100; height = 100})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         layoutParameter:setAlign(ccui.RelativeAlign.locationBelowCenter)
         layoutParameter:setRelativeToWidgetName('touchElement')

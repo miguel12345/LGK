@@ -1,13 +1,13 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Button:create('')
-    local layoutParameter = widget:getLayoutParameter()
     widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
     widget:setSizeValues({width = 200; height = 80})
+    local layoutParameter = nil
     layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
     layoutParameter:setGravity(ccui.LinearGravity.centerHorizontal)
     if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
+        widget:setLayoutParameter(layoutParameter)
+    end
     p_elements['item'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then

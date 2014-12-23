@@ -1,11 +1,8 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
-    local layoutParameter = widget:getLayoutParameter()
+    widget:setCascadeOpacityEnabled(true)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
     widget:setSizeValues({width = 1.0; height = 1.0})
-    if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
     p_elements['root'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -15,9 +12,9 @@ return function(p_actionHandler,p_elements)
     widget:setLayoutType(ccui.LayoutType.VERTICAL)
     local child = (function()
         local widget =  ccui.Text:create('You should see this text with word wrapping since it is the default','tests/res/fonts/Proxima Nova Light.ttf',30)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 0})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 10;bottom = 0;})
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
@@ -40,9 +37,9 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget =  ccui.Text:create('You should see this text with word wrapping','tests/res/fonts/Proxima Nova Light.ttf',30)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 0})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 20;bottom = 0;})
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
@@ -66,9 +63,9 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget =  ccui.Text:create('You should see this text with character wrapping','tests/res/fonts/Proxima Nova Light.ttf',30)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 0})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()
         layoutParameter:setMargin({left = 0;right = 0;top = 20;bottom = 0;})
         layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()

@@ -1,15 +1,16 @@
 return function(p_actionHandler,p_elements)
     local widget = ccui.Layout:create()
-    local layoutParameter = widget:getLayoutParameter()
+    widget:setCascadeOpacityEnabled(true)
     widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.absolute)
     widget:setSizeValues({width = 1.0; height = 400})
+    local layoutParameter = nil
     layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
     local alignment = ccui.RelativeAlign.centerInParent
     layoutParameter:setAlign(alignment)
     widget:setLogLayout(true)
     if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end
+        widget:setLayoutParameter(layoutParameter)
+    end
     p_elements['imageParent'] = widget
     local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
@@ -20,9 +21,9 @@ return function(p_actionHandler,p_elements)
     local child = (function()
         local widget = lgk.ImageViewExtended.create()
         widget:ignoreContentAdaptWithSize(false)
-        local layoutParameter = widget:getLayoutParameter()
         widget:setSizeTypes(ccui.SizeType.absolute,ccui.SizeType.absolute)
         widget:setSizeValues({width = 200; height = 200})
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.centerInParent
         layoutParameter:setAlign(alignment)
@@ -41,7 +42,7 @@ return function(p_actionHandler,p_elements)
     widget:addChild(child)
     local child = (function()
         local widget = ccui.Button:create('')
-        local layoutParameter = widget:getLayoutParameter()
+        local layoutParameter = nil
         layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         local alignment = ccui.RelativeAlign.alignParentBottomCenterHorizontal
         layoutParameter:setAlign(alignment)

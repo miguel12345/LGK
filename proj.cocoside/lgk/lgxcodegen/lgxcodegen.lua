@@ -455,13 +455,25 @@ end
 
 widgetAttributeInflater.inflateWidgetAttributes = function(xmlNode,isNew)
 
+    local addedLayoutParameterChangeCode = false
+    
+    local addCodeForPotentialLayoutParameterChange = function()
+        if not addedLayoutParameterChangeCode then
+        
+            if isNew then
+                lgxCodeGen.addCodeLine("local layoutParameter = nil")
+            else 
+                lgxCodeGen.addCodeLine("local layoutParameter = widget:getLayoutParameter()")
+                lgxCodeGen.addCodeLine("local layoutParameterChanged = false")
+            end
+
+            addedLayoutParameterChangeCode = true
+        end
+    end
+
     local layoutUtils = utils
 --    local layoutParameter = widget:getLayoutParameter()
-    lgxCodeGen.addCodeLine("local layoutParameter = widget:getLayoutParameter()")
-
-    if not isNew then
-        lgxCodeGen.addCodeLine("local layoutParameterChanged = false")
-    end
+    
 
     -- parse background color
     local backgroundColorString = xmlNode["@backgroundColor"]
@@ -502,6 +514,9 @@ widgetAttributeInflater.inflateWidgetAttributes = function(xmlNode,isNew)
     --relative layout
     local alignment = xmlNode["@alignment"]
     if alignment ~= nil then
+    
+        addCodeForPotentialLayoutParameterChange()
+        
 --        layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
         lgxCodeGen.addCodeLine("layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()")
 
@@ -524,6 +539,9 @@ end]])
 
         local relativeToWidgetName=xmlNode["@"..key]
         if relativeToWidgetName then
+            
+            addCodeForPotentialLayoutParameterChange()
+            
             lgxCodeGen.addCodeLine("layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()")
 --            layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
             
@@ -569,6 +587,8 @@ end]])
     local margin = xmlNode["@margin"]
     if margin ~= nil then
     
+        addCodeForPotentialLayoutParameterChange()
+        
         local marginTable = layoutUtils:getMarginFromString(margin)    
         lgxCodeGen.addCodeLine("layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()")
         
@@ -601,7 +621,9 @@ end]])
         
         
         if marginTableLeft ~= 0 or marginTableRight ~= 0 or marginTableTop ~= 0 or marginTableBottom ~= 0 then
-        
+            
+            addCodeForPotentialLayoutParameterChange()
+            
             lgxCodeGen.addCodeLine("layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()")
             
             if isNew then
@@ -638,6 +660,8 @@ end]])
     -- gravity
     local gravity = xmlNode["@gravity"]
     if gravity ~= nil then
+        
+        addCodeForPotentialLayoutParameterChange()
         
         local gravity = layoutUtils:getGravityFromString(gravity)
         lgxCodeGen.addCodeLine("layoutParameter = layoutParameter or ccui.LinearLayoutParameter:create()")
@@ -694,20 +718,22 @@ end
     end
 
     -- apply layout parameter
-    if isNew then
+    if addedLayoutParameterChangeCode then
     
-        lgxCodeGen.addCodeLine([[
-if layoutParameter ~= nil then
-            widget:setLayoutParameter(layoutParameter)
-        end]])
+        if isNew then
+    
+            lgxCodeGen.addCodeLine("if layoutParameter ~= nil then")
+            lgxCodeGen.addCodeLine("    widget:setLayoutParameter(layoutParameter)")
+            lgxCodeGen.addCodeLine("end")
 
-    else
-        lgxCodeGen.addCodeLine([[
-if layoutParameterChanged then
-            widget:layoutParameterChanged()
-        end]])
-
+        else
+            lgxCodeGen.addCodeLine("if layoutParameterChanged then")
+            lgxCodeGen.addCodeLine("    widget:layoutParameterChanged()")
+            lgxCodeGen.addCodeLine("end")
+    
+        end
     end
+    
     
     -- propagate touch to children
     local propagateTouchToChildren =  xmlNode["@propagateTouchToChildren"]
@@ -783,6 +809,7 @@ widgetInflater.inflateLayout = function(xmlNode,isNew)
 --    local layout = ccui.Layout:create()
     if isNew then
         lgxCodeGen.addCodeLine("local widget = ccui.Layout:create()")
+        lgxCodeGen.addCodeLine("widget:setCascadeOpacityEnabled(true)")
     end
     widgetAttributeInflater.inflateLayoutAttributes(xmlNode,isNew)
 
@@ -1113,8 +1140,13 @@ widgetInflater.inflateInclude = function(xmlNode,handler,elements)
         end
     end
     lgxCodeGen.addCodeLine("local widget = require('"..genFolderName.."."..includeModule.."_lgx')(p_actionHandler,p_elements,"..table.tostring( contextTable )..")")
+    
+    xmlNode["@name"] = xmlNode["@newName"]
+    widgetAttributeInflater.inflateWidgetAttributes(xmlNode,false)
+    
     lgxCodeGen.addCodeLine("local widgetTemp = widget")
     
+       
     local children = xmlNode:children()
     for i, child in ipairs(children) do
         lgxCodeGen.addCodeLine("widget = p_elements['"..child["@name"].."']")
