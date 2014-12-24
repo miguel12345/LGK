@@ -1,6 +1,6 @@
 <RootLayout type="relative" name="SceneRoot">
 	
-	<Layout size="1.0,1.0" type="vertical" name="root">
+	<Layout size="1.0,0.95" alignment="BC" type="vertical" name="root">
 		<ListView marginTop="20" size="1.0,1.0" name="elements">
 			
 		</ListView>

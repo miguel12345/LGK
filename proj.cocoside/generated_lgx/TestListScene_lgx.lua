@@ -18,7 +18,14 @@ return function(p_actionHandler,p_elements)
         local widget = ccui.Layout:create()
         widget:setCascadeOpacityEnabled(true)
         widget:setSizeTypes(ccui.SizeType.percent,ccui.SizeType.percent)
-        widget:setSizeValues({width = 1.0; height = 1.0})
+        widget:setSizeValues({width = 1.0; height = 0.95})
+        local layoutParameter = nil
+        layoutParameter = layoutParameter or ccui.RelativeLayoutParameter:create()
+        local alignment = ccui.RelativeAlign.alignParentBottomCenterHorizontal
+        layoutParameter:setAlign(alignment)
+        if layoutParameter ~= nil then
+            widget:setLayoutParameter(layoutParameter)
+        end
         p_elements['root'] = widget
         local relativeLayoutParameter = widget:getLayoutParameter();
         if relativeLayoutParameter ~= nil and relativeLayoutParameter:getLayoutType() == ccui.LayoutParameterType.relative then
