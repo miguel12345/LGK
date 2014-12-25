@@ -5,8 +5,6 @@ require "cocos.init"
 
 -- utils
 lgk.json = require "lgk.utils.json_utf"
-require "lgk.utils.luaExtensions"
-require "lgk.utils.stringExtended"
 
 -- animation
 require "lgk.animation.Transition"
